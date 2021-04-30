@@ -14,26 +14,7 @@
     background-color: green;
 }
 
-.header {
-    grid-area: header;
-    background-color: red;
-}
 
-/*.header > img {*/
-/*    width: 50px;*/
-/*}*/
 
-.nav {
-    grid-area: nav;
-    background-color: yellow;
-}
 
-.content {
-    grid-area: content;
-    background-color: orange;
-}
 
-.content > img {
-    height: 100px;
-
-}
