@@ -11,11 +11,8 @@ export function MyPosts() {
         <button>Remove</button>
       </div>
       <div className={classes.posts}>
-        <Post/>
-        <Post/>
-        <Post/>
-        <Post/>
-        <Post/>
+        <Post message="Hi! How are you?"/>
+        <Post message="It is my first post"/>
       </div>
     </div>
   )

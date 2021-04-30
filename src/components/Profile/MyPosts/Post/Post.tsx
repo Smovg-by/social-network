@@ -1,12 +1,16 @@
 import React from 'react';
 import classes from './Post.module.css';
 
-export function Post() {
+type PostProps = {
+  message: string;
+}
+
+export function Post(props: PostProps) {
   return (
     <div className={classes.item}>
       <img
         src="http://primrep.ru/wp-content/uploads/2016/01/avatar-320x240.jpg"/>
-      Post123
+      {props.message}
       <div>
         <span>like</span>
       </div>
