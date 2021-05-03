@@ -1,10 +1,2 @@
-.content {
-    grid-area: content;
-    background-color: orange;
-}
 
-.content > img {
-    height: 100px;
-
-}
 
