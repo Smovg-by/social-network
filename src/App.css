@@ -16,7 +16,7 @@
 
 .app-wrapper-content {
     grid-area: content;
-    background-color: orange;
+    background-color: darkgrey;
 }
 
 .app-wrapper-content > img {
