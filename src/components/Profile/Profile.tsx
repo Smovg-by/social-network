@@ -4,11 +4,21 @@ import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 
 
-export function Profile() {
+type MyPostsPropsType = {
+  postsData: Array<PostElementType>
+}
+
+type PostElementType = {
+  id: number
+  message: string
+}
+
+export function Profile(props: MyPostsPropsType) {
+
   return (
     <div>
       <ProfileInfo/>
-      <MyPosts/>
+      <MyPosts posts={props.postsData}/>
     </div>
   )
 }

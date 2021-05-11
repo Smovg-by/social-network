@@ -4,6 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+export type DialogsDataType = {
+  id: number
+  name: string
+}
+
+export type MessagesDataType = {
+  id: number
+  message: string
+}
+
+export type PostsDataType = {
+  id: number
+  message: string
+}
+
 export const dialogsData = [
   {id: 1, name: 'Dimych'},
   {id: 2, name: 'Andrey'},
@@ -19,9 +34,16 @@ export const messagesData = [
   {id: 3, message: 'Yo!'},
 ]
 
+export const postsData = [
+  {id: 1, message: "Hi! How are you?"},
+  {id: 2, message: "It is my first post"},
+  {id: 3, message: "BlaBla"},
+  {id: 4, message: "Dada"},
+]
+
 ReactDOM.render(
   <React.StrictMode>
-    <App dialogsData={dialogsData} messagesData={messagesData}/>
+    <App dialogsData={dialogsData} messagesData={messagesData} postsData={postsData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

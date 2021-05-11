@@ -2,14 +2,18 @@ import React from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from './Posts/Post';
 
-export function MyPosts() {
+export type MyPostsPropsType = {
+  posts: Array<PostElementType>
+}
 
-  const postsData = [
-    {id: 1, message: "Hi! How are you?"},
-    {id: 2, message: "It is my first post"},
-  ]
+export type PostElementType = {
+  id: number
+  message: string
+}
 
-  const postsElements = postsData.map((item)=> {
+export function MyPosts(props: MyPostsPropsType) {
+
+  let postsElements = props.posts.map((item)=> {
     return (<Post message={item.message}/>)
   })
 
