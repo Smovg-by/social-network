@@ -9,8 +9,22 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 
+export type AppPropsType = {
+  dialogsData: Array<dialogsDataType>
+  messagesData: Array<messagesDataType>
+}
 
-function App() {
+export type dialogsDataType = {
+  id: number
+  name: string
+}
+
+export type messagesDataType = {
+  id: number
+  message: string
+}
+
+function App(props: AppPropsType) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -18,11 +32,11 @@ function App() {
         <Navbar/>
         {/*<Profile/>*/}
         <div className="app-wrapper-content">
-          <Route path='/dialogs' component={Dialogs}/>
-          <Route path='/profile' component={Profile}/>
-          <Route path='/news' component={News}/>
-          <Route path='/music' component={Music}/>
-          <Route path='/Settings' component={Settings}/>
+          <Route path="/dialogs" render={() => <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
+          <Route path="/profile" render={() => <Profile/>}/>
+          <Route path="/news" render={() => <News/>}/>
+          <Route path="/music" render={() => <Music/>}/>
+          <Route path="/Settings" render={() => <Settings/>}/>
         </div>
       </div>
     </BrowserRouter>
