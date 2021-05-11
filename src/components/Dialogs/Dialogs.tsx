@@ -1,14 +1,11 @@
 import classes from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {
-  MessagesDataType,
-  DialogsDataType
-} from '../../index';
+import {Messages, Dialog} from '../../redux/state';
 
 type DialogsComponentDataType = {
-  dialogsData: Array<DialogsDataType>
-  messagesData: Array<MessagesDataType>
+  dialogsData: Array<Dialog>
+  messagesData: Array<Messages>
 }
 
 export type MessageType = {

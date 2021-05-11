@@ -8,27 +8,28 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import {
-  DialogsDataType,
-  MessagesDataType,
-  PostsDataType
-} from './index';
+import {RootStateType} from './redux/state';
+
 
 export type AppPropsType = {
-  dialogsData: Array<DialogsDataType>
-  messagesData: Array<MessagesDataType>
-  postsData: Array<PostsDataType>
-}
+  stateData: RootStateType
+  }
 
 function App(props: AppPropsType) {
+  debugger
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header/>
-        <Navbar/>
+        <Navbar sideBarData={props.stateData.sideBarData}/>
         <div className="app-wrapper-content">
-          <Route path="/dialogs" render={() => <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
-          <Route path="/profile" render={() => <Profile postsData={props.postsData}/>}/>
+          <Route path="/dialogs" render={() =>
+            <Dialogs
+            dialogsData={props.stateData.dialogsData}
+            messagesData={props.stateData.messagesData}/>}/>
+          <Route path="/profile" render={() =>
+            <Profile
+            postsData={props.stateData.postsData}/>}/>
           <Route path="/news" render={() => <News/>}/>
           <Route path="/music" render={() => <Music/>}/>
           <Route path="/Settings" render={() => <Settings/>}/>
