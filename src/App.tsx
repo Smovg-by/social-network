@@ -8,11 +8,13 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import {RootStateType} from './redux/state';
+import {addPost, RootStateType} from './redux/state';
+import {AddPostType} from './redux/state'
 
 
 export type AppPropsType = {
   stateData: RootStateType
+  addPost: AddPostType
   }
 
 function App(props: AppPropsType) {
@@ -29,7 +31,7 @@ function App(props: AppPropsType) {
             messagesData={props.stateData.messagesData}/>}/>
           <Route path="/profile" render={() =>
             <Profile
-            postsData={props.stateData.postsData}/>}/>
+            postsData={props.stateData.postsData} addPost={addPost}/>}/>
           <Route path="/news" render={() => <News/>}/>
           <Route path="/music" render={() => <Music/>}/>
           <Route path="/Settings" render={() => <Settings/>}/>

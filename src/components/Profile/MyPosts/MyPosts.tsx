@@ -1,10 +1,11 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
-
+import { AddPostType } from '../../../redux/state'
 
 export type MyPostsPropsType = {
   posts: Array<PostElementType>
+  addPost: AddPostType
 }
 
 export type PostElementType = {
@@ -19,10 +20,13 @@ export function MyPosts (props: MyPostsPropsType) {
 
   let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-  let addPost =()=> {
-
-    let text = newPostElement.current?.value; //? значит, что в этом поле моежт быть Null
-    alert(text)
+  let addPost = () => {
+    debugger
+    let text = newPostElement.current?.value //? значит, что в этом поле моежт быть Null
+    if (text) {
+      // check if text exists (no undefined). Without this snippet type error is caused
+      props.addPost(text)
+    }
   }
 
   return (
@@ -30,7 +34,7 @@ export function MyPosts (props: MyPostsPropsType) {
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea ref={newPostElement}>Input your thoughts here...</textarea>
+          <textarea ref={newPostElement}></textarea>
         </div>
         <div>
           <button onClick={addPost}>Add post</button>

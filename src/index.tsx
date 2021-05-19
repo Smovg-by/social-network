@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {state} from './redux/state';
+import {addPost, state} from './redux/state';
+
+//addPost("WoW Samurai");
 
 ReactDOM.render(
   <React.StrictMode>
     {/*<App dialogsData={dialogsData} messagesData={messagesData} postsData={postsData}/>*/}
-    <App stateData={state}/>
+    <App stateData={state} addPost={addPost}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
