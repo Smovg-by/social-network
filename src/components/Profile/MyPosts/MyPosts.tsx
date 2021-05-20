@@ -2,6 +2,7 @@ import React from 'react'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 import { AddPostType } from '../../../redux/state'
+import { textChangeRangeNewSpan } from 'typescript'
 
 export type MyPostsPropsType = {
   posts: Array<PostElementType>
@@ -21,11 +22,14 @@ export function MyPosts (props: MyPostsPropsType) {
   let newPostElement = React.createRef<HTMLTextAreaElement>()
 
   let addPost = () => {
-    debugger
     let text = newPostElement.current?.value //? значит, что в этом поле моежт быть Null
     if (text) {
       // check if text exists (no undefined). Without this snippet type error is caused
       props.addPost(text)
+      // clear textarea if any data inside exists
+      if (newPostElement.current?.value) {
+        newPostElement.current.value = ''
+      }
     }
   }
 

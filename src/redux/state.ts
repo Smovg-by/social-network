@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from '../render'
+
 export type Dialog = {
   id: number
   name: string
@@ -73,6 +75,8 @@ export let state: RootStateType = {
 
 export type AddPostType = (postMessage: string) => void
 
+
+
 export let addPost = (postMessage: string) => {
   // alert(postMessage)
   let newPost = {
@@ -80,5 +84,6 @@ export let addPost = (postMessage: string) => {
     message: postMessage
     // likesCount: 0
   }
-  state.postsData.push(newPost)
+  state.postsData.unshift(newPost)
+  rerenderEntireTree(state)
 }
