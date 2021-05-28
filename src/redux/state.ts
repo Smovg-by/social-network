@@ -1,4 +1,4 @@
-import {rerenderEntireTree} from '../render'
+import { rerenderEntireTree } from '../render'
 
 export type Dialog = {
   id: number
@@ -26,6 +26,7 @@ export type RootStateType = {
   messagesData: Array<Messages>
   postsData: Array<Posts>
   sideBarData: Array<Friends>
+  newPostText: string
 }
 
 export let state: RootStateType = {
@@ -51,6 +52,8 @@ export let state: RootStateType = {
     { id: 4, message: 'Dada' }
   ],
 
+  newPostText: 'it-kamasutra',
+
   sideBarData: [
     {
       id: 1,
@@ -75,9 +78,7 @@ export let state: RootStateType = {
 
 export type AddPostType = (postMessage: string) => void
 
-
-
-export let addPost = (postMessage: string) => {
+export let addPost: AddPostType = postMessage => {
   // alert(postMessage)
   let newPost = {
     id: 5,
@@ -85,5 +86,13 @@ export let addPost = (postMessage: string) => {
     // likesCount: 0
   }
   state.postsData.unshift(newPost)
+  state.newPostText = ''
+  rerenderEntireTree(state)
+}
+
+export type updatePostTextType = (newText: string) => void
+
+export let updatePostText: updatePostTextType = newText => {
+  state.newPostText = newText
   rerenderEntireTree(state)
 }
