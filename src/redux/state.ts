@@ -1,4 +1,6 @@
-import { rerenderEntireTree } from '../render'
+let rerenderEntireTree = (state: RootStateType) => {
+  console.log('state has been changed')
+}
 
 export type Dialog = {
   id: number
@@ -95,4 +97,8 @@ export type updatePostTextType = (newText: string) => void
 export let updatePostText: updatePostTextType = newText => {
   state.newPostText = newText
   rerenderEntireTree(state)
+}
+
+export const subscribe = (observer: (state: RootStateType) => void) => {
+  rerenderEntireTree = observer
 }
