@@ -2,13 +2,12 @@ import React from 'react'
 import classes from './Profile.module.css'
 import { MyPosts } from './MyPosts/MyPosts'
 import { ProfileInfo } from './MyPosts/ProfileInfo/ProfileInfo'
-import { addPost, AddPostType, updatePostTextType } from '../../redux/state'
 
-type MyPostsPropsType = {
+export type ProfilePropsType = {
   postsData: Array<PostElementType>
-  addPost: AddPostType
+  addPost: (postMessage: string) => void
   newPostText: string
-  updatePostText: updatePostTextType
+  updatePostText: (newText: string) => void
 }
 
 type PostElementType = {
@@ -16,13 +15,13 @@ type PostElementType = {
   message: string
 }
 
-export function Profile (props: MyPostsPropsType) {
+export function Profile (props: ProfilePropsType) {
   return (
     <div>
       <ProfileInfo />
       <MyPosts
-        posts={props.postsData}
-        addPost={addPost}
+        postsData={props.postsData}
+        addPost={props.addPost}
         newPostText={props.newPostText}
         updatePostText={props.updatePostText}
       />

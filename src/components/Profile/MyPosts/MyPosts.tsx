@@ -1,14 +1,12 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
-import { AddPostType, updatePostTextType } from '../../../redux/state'
-import { textChangeRangeNewSpan } from 'typescript'
 
 export type MyPostsPropsType = {
-  posts: Array<PostElementType>
-  addPost: AddPostType
+  postsData: Array<PostElementType>
+  addPost: (postMessage: string) => void
   newPostText: string
-  updatePostText: updatePostTextType
+  updatePostText: (newText: string) => void
 }
 
 export type PostElementType = {
@@ -20,7 +18,7 @@ export type PostElementType = {
 //
 export function MyPosts (props: MyPostsPropsType) {
   //---BLL
-  let postsElements = props.posts.map(item => {
+  let postsElements = props.postsData.map(item => {
     return <Post message={item.message} />
   })
 

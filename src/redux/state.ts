@@ -1,6 +1,6 @@
-let rerenderEntireTree = (state: RootStateType) => {
-  console.log('state has been changed')
-}
+//
+//STORE START
+//
 
 export type Dialog = {
   id: number
@@ -15,6 +15,7 @@ export type Messages = {
 export type Posts = {
   id: number
   message: string
+  likesCount: number
 }
 
 export type Friends = {
@@ -23,82 +24,107 @@ export type Friends = {
   avatar: string
 }
 
-export type RootStateType = {
-  dialogsData: Array<Dialog>
-  messagesData: Array<Messages>
-  postsData: Array<Posts>
-  sideBarData: Array<Friends>
+export type profilePageType = {
   newPostText: string
+  posts: Array<Posts>
 }
 
-export let state: RootStateType = {
-  dialogsData: [
-    { id: 1, name: 'Dimych' },
-    { id: 2, name: 'Andrey' },
-    { id: 3, name: 'Sveta' },
-    { id: 4, name: 'Sasha' },
-    { id: 5, name: 'Victor' },
-    { id: 6, name: 'Valera' }
-  ],
+export type dialogsPageType = {
+  dialogs: Array<Dialog>
+  messages: Array<Messages>
+}
 
-  messagesData: [
-    { id: 1, message: 'Hello!' },
-    { id: 2, message: 'How is yor IT kamasutra?' },
-    { id: 3, message: 'Yo!' }
-  ],
+export type RootStateType = {
+  profilePage: profilePageType
+  dialogsPage: dialogsPageType
+  sideBarData: Array<Friends>
+}
 
-  postsData: [
-    { id: 1, message: 'Hi! How are you?' },
-    { id: 2, message: 'It is my first post' },
-    { id: 3, message: 'BlaBla' },
-    { id: 4, message: 'Dada' }
-  ],
+export type StoreType = {
+  _state: RootStateType
+  addPost: (postMessage: string) => void
+  updatePostText: (newText: string) => void
+  _onChange: (_state: RootStateType) => void
+  subscribe: (callback: () => void) => void
+  getState: () => RootStateType
+}
 
-  newPostText: 'it-kamasutra',
-
-  sideBarData: [
-    {
-      id: 1,
-      name: 'John',
-      avatar:
-        'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+export let store: StoreType = {
+  _state: {
+    profilePage: {
+      newPostText: 'it-kamasutra',
+      posts: [
+        { id: 1, message: 'Hi! How are you?', likesCount: 12 },
+        { id: 2, message: 'It is my first post', likesCount: 11 },
+        { id: 3, message: 'BlaBla', likesCount: 11 },
+        { id: 4, message: 'Dada', likesCount: 11 }
+      ]
     },
-    {
-      id: 2,
-      name: 'Nick',
-      avatar:
-        'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+    dialogsPage: {
+      dialogs: [
+        { id: 1, name: 'Dimych' },
+        { id: 2, name: 'Andrey' },
+        { id: 3, name: 'Sveta' },
+        { id: 4, name: 'Sasha' },
+        { id: 5, name: 'Victor' },
+        { id: 6, name: 'Valera' }
+      ],
+      messages: [
+        { id: 1, message: 'Hello!' },
+        { id: 2, message: 'How is yor IT kamasutra?' },
+        { id: 3, message: 'Yo!' },
+        { id: 4, message: 'Yo!' },
+        { id: 5, message: 'Yo!' },
+        { id: 6, message: 'Yo!' }
+      ]
     },
-    {
-      id: 3,
-      name: 'Ivan',
-      avatar:
-        'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+    sideBarData: [
+      {
+        id: 1,
+        name: 'John',
+        avatar:
+          'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+      },
+      {
+        id: 2,
+        name: 'Nick',
+        avatar:
+          'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+      },
+      {
+        id: 3,
+        name: 'Ivan',
+        avatar:
+          'https://im0-tub-by.yandex.net/i?id=c23ea5e31e98b34d181dc4d0907bc0a4-sr&n=13'
+      }
+    ]
+  },
+  addPost (postMessage: string) {
+    let newPost = {
+      id: 5,
+      message: postMessage,
+      likesCount: 0
     }
-  ]
-}
-
-export type AddPostType = (postMessage: string) => void
-
-export let addPost: AddPostType = postMessage => {
-  // alert(postMessage)
-  let newPost = {
-    id: 5,
-    message: postMessage
-    // likesCount: 0
+    this._state.profilePage.posts.unshift(newPost)
+    this._state.profilePage.newPostText = ''
+    this._onChange(this._state)
+  },
+  updatePostText (newText: string) {
+    this._state.profilePage.newPostText = newText
+    this._onChange(this._state)
+  },
+  _onChange () {
+    console.log('state has been changed')
+  },
+  subscribe (callback) {
+    this._onChange = callback
+  },
+  getState () {
+    return this._state
   }
-  state.postsData.unshift(newPost)
-  state.newPostText = ''
-  rerenderEntireTree(state)
 }
+//
+//STORE END
+//
 
-export type updatePostTextType = (newText: string) => void
-
-export let updatePostText: updatePostTextType = newText => {
-  state.newPostText = newText
-  rerenderEntireTree(state)
-}
-
-export const subscribe = (observer: (state: RootStateType) => void) => {
-  rerenderEntireTree = observer
-}
+//TODO передать store в пропсы при вызове App
