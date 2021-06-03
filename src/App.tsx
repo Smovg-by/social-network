@@ -29,6 +29,8 @@ const App: React.FC<AppPropsType> = props => {
               <Dialogs
                 dialogsData={state.dialogsPage.dialogs}
                 messagesData={state.dialogsPage.messages}
+                newMessageBody={state.dialogsPage.newMessageBody}
+                dispatch={props.store.dispatch.bind(props.store)}
               />
             )}
           />

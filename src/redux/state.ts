@@ -4,6 +4,8 @@
 
 export const ADD_POST: 'ADD_POST' = 'ADD_POST'
 export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
+export const UPDATE_NEW_MESSAGE_BODY: 'UPDATE_NEW_MESSAGE_BODY' =
+  'UPDATE_NEW_MESSAGE_BODY'
 
 export type Dialog = {
   id: number
@@ -35,6 +37,7 @@ export type profilePageType = {
 export type dialogsPageType = {
   dialogs: Array<Dialog>
   messages: Array<Messages>
+  newMessageBody: string
 }
 
 export type RootStateType = {
@@ -62,7 +65,20 @@ export type UpdatePostTextType = {
   newText: string
 }
 
-export type ActionType = AddPostActionType | UpdatePostTextType
+export type UpdateNewMessageBodyActionType = {
+  type: 'UPDATE_NEW_MESSAGE_BODY'
+  body: string
+}
+export type SendMessageActionType = {
+  type: 'SEND_MESSAGE'
+  body: string
+}
+
+export type ActionType =
+  | AddPostActionType
+  | UpdatePostTextType
+  | UpdateNewMessageBodyActionType
+  | SendMessageActionType
 
 export let store: StoreType = {
   _state: {
@@ -91,7 +107,8 @@ export let store: StoreType = {
         { id: 4, message: 'Yo!' },
         { id: 5, message: 'Yo!' },
         { id: 6, message: 'Yo!' }
-      ]
+      ],
+      newMessageBody: ''
     },
     sideBarData: [
       {
@@ -114,17 +131,17 @@ export let store: StoreType = {
       }
     ]
   },
-  _callSubscriber () {
+  _callSubscriber() {
     console.log('state has been changed')
   },
-  subscribe (callback) {
+  subscribe(callback) {
     this._callSubscriber = callback
   },
-  getState () {
+  getState() {
     return this._state
   },
 
-  dispatch (action: ActionType) {
+  dispatch(action: ActionType) {
     if (action.type === ADD_POST) {
       let newPost = {
         id: 5,
@@ -136,6 +153,14 @@ export let store: StoreType = {
       this._callSubscriber(this._state)
     } else if (action.type === UPDATE_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText
+      this._callSubscriber(this._state)
+    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+      this._state.dialogsPage.newMessageBody = action.body
+      this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
+    } else if (action.type === 'SEND_MESSAGE') {
+      let body = this._state.dialogsPage.newMessageBody
+      this._state.dialogsPage.newMessageBody = ''
+      this._state.dialogsPage.messages.push({ id: 6, message: body })
       this._callSubscriber(this._state)
     } else return this._state
   }
@@ -164,6 +189,19 @@ export const updatePostTextAC = (newText: string): UpdatePostTextType => {
   return {
     type: UPDATE_POST_TEXT,
     newText: newText
+  }
+}
+export const UpdateNewMessageBodyAC = (text: string): UpdateNewMessageBodyActionType => {
+  return {
+    type: 'UPDATE_NEW_MESSAGE_BODY',
+    body: text
+  }
+}
+
+export const SendMessageAC = (text: string): SendMessageActionType => {
+  return {
+    type: 'SEND_MESSAGE',
+    body: text
   }
 }
 //
