@@ -42,12 +42,24 @@ export type RootStateType = {
 
 export type StoreType = {
   _state: RootStateType
-  addPost: (postMessage: string) => void
-  updatePostText: (newText: string) => void
-  _onChange: (_state: RootStateType) => void
+  // addPost: (postMessage: string) => void
+  // updatePostText: (newText: string) => void
+  _callSubscriber: (_state: RootStateType) => void
   subscribe: (callback: () => void) => void
   getState: () => RootStateType
+  dispatch: (action: any) => void
 }
+
+export type AddPostActionType = {
+  type: 'ADD_POST'
+  postMessage: string
+}
+export type ChangeNewTextActionType = {
+  type: 'UPDATE_POST_TEXT'
+  newText: string
+}
+
+export type ActionType = AddPostActionType | ChangeNewTextActionType
 
 export let store: StoreType = {
   _state: {
@@ -99,29 +111,46 @@ export let store: StoreType = {
       }
     ]
   },
-  addPost (postMessage: string) {
-    let newPost = {
-      id: 5,
-      message: postMessage,
-      likesCount: 0
-    }
-    this._state.profilePage.posts.unshift(newPost)
-    this._state.profilePage.newPostText = ''
-    this._onChange(this._state)
-  },
-  updatePostText (newText: string) {
-    this._state.profilePage.newPostText = newText
-    this._onChange(this._state)
-  },
-  _onChange () {
+  _callSubscriber () {
     console.log('state has been changed')
   },
   subscribe (callback) {
-    this._onChange = callback
+    this._callSubscriber = callback
   },
   getState () {
     return this._state
+  },
+
+  dispatch (action: ActionType) {
+    if (action.type === 'ADD_POST') {
+      let newPost = {
+        id: 5,
+        message: action.postMessage,
+        likesCount: 0
+      }
+      this._state.profilePage.posts.unshift(newPost)
+      this._state.profilePage.newPostText = ''
+      this._callSubscriber(this._state)
+    } else if (action.type === 'UPDATE_POST_TEXT') {
+      this._state.profilePage.newPostText = action.newText
+      this._callSubscriber(this._state)
+    } else return this._state
   }
+
+  // addPost (postMessage: string) {
+  //   let newPost = {
+  //     id: 5,
+  //     message: postMessage,
+  //     likesCount: 0
+  //   }
+  //   this._state.profilePage.posts.unshift(newPost)
+  //   this._state.profilePage.newPostText = ''
+  //   this._callSubscriber(this._state)
+  // },
+  // updatePostText (newText: string) {
+  //   this._state.profilePage.newPostText = newText
+  //   this._callSubscriber(this._state)
+  // }
 }
 //
 //STORE END

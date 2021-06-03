@@ -1,12 +1,19 @@
 import React from 'react'
+import {
+  ActionType,
+  AddPostActionType,
+  ChangeNewTextActionType
+} from '../../../redux/state'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
 export type MyPostsPropsType = {
   postsData: Array<PostElementType>
-  addPost: (postMessage: string) => void
   newPostText: string
-  updatePostText: (newText: string) => void
+  dispatch: (action: ActionType) => void
+  // заменили отдельные методы на dispatch
+  // updatePostText: (newText: ChangeNewTextActionType) => void
+  // addPost: (postMessage: AddPostActionType) => void
 }
 
 export type PostElementType = {
@@ -27,7 +34,9 @@ export function MyPosts (props: MyPostsPropsType) {
   let addPost = () => {
     let text = props.newPostText //? значит, что в этом поле может быть Null
     if (text) {
-      props.addPost(text)
+      // заменили отдельные методы на dispatch
+      // props.addPost(text)
+      props.dispatch({ type: 'ADD_POST', postMessage: text })
     }
   }
 
@@ -40,7 +49,10 @@ export function MyPosts (props: MyPostsPropsType) {
           <textarea
             // TODO вынести функцию из JSX (e: ChangeEvent<HTMLTextAreaElement> )
             onChange={e => {
-              props.updatePostText(e.currentTarget.value)
+              props.dispatch({
+                type: 'UPDATE_POST_TEXT',
+                newText: e.currentTarget.value
+              })
             }}
             ref={newPostElement}
             value={props.newPostText}

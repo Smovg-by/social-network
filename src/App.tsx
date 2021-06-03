@@ -37,9 +37,11 @@ const App: React.FC<AppPropsType> = props => {
             render={() => (
               <Profile
                 postsData={state.profilePage.posts}
-                addPost={props.store.addPost.bind(props.store)}
                 newPostText={state.profilePage.newPostText}
-                updatePostText={props.store.updatePostText.bind(props.store)}
+                dispatch={props.store.dispatch.bind(props.store)}
+                // заменили отдельные методы на dispatch
+                // addPost={props.store.dispatch.bind(props.store)}
+                // updatePostText={props.store.dispatch.bind(props.store)}
               />
             )}
           />

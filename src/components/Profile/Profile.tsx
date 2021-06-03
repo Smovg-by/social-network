@@ -1,13 +1,14 @@
-import React from 'react'
-import classes from './Profile.module.css'
 import { MyPosts } from './MyPosts/MyPosts'
 import { ProfileInfo } from './MyPosts/ProfileInfo/ProfileInfo'
+import { ActionType } from '../../redux/state'
 
 export type ProfilePropsType = {
   postsData: Array<PostElementType>
-  addPost: (postMessage: string) => void
   newPostText: string
-  updatePostText: (newText: string) => void
+  dispatch: (action: ActionType) => void
+  // заменили отдельные методы на dispatch
+  // addPost: (postMessage: AddPostActionType) => void
+  // updatePostText: (newText: ChangeNewTextActionType) => void
 }
 
 type PostElementType = {
@@ -21,9 +22,11 @@ export function Profile (props: ProfilePropsType) {
       <ProfileInfo />
       <MyPosts
         postsData={props.postsData}
-        addPost={props.addPost}
         newPostText={props.newPostText}
-        updatePostText={props.updatePostText}
+        dispatch={props.dispatch}
+        // заменили отдельные методы на dispatch
+        // updatePostText={props.updatePostText}
+        // addPost={props.addPost}
       />
     </div>
   )
