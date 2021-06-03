@@ -2,6 +2,9 @@
 //STORE START
 //
 
+export const ADD_POST: 'ADD_POST' = 'ADD_POST'
+export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
+
 export type Dialog = {
   id: number
   name: string
@@ -54,12 +57,12 @@ export type AddPostActionType = {
   type: 'ADD_POST'
   postMessage: string
 }
-export type ChangeNewTextActionType = {
+export type UpdatePostTextType = {
   type: 'UPDATE_POST_TEXT'
   newText: string
 }
 
-export type ActionType = AddPostActionType | ChangeNewTextActionType
+export type ActionType = AddPostActionType | UpdatePostTextType
 
 export let store: StoreType = {
   _state: {
@@ -122,7 +125,7 @@ export let store: StoreType = {
   },
 
   dispatch (action: ActionType) {
-    if (action.type === 'ADD_POST') {
+    if (action.type === ADD_POST) {
       let newPost = {
         id: 5,
         message: action.postMessage,
@@ -131,7 +134,7 @@ export let store: StoreType = {
       this._state.profilePage.posts.unshift(newPost)
       this._state.profilePage.newPostText = ''
       this._callSubscriber(this._state)
-    } else if (action.type === 'UPDATE_POST_TEXT') {
+    } else if (action.type === UPDATE_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText
       this._callSubscriber(this._state)
     } else return this._state
@@ -151,6 +154,17 @@ export let store: StoreType = {
   //   this._state.profilePage.newPostText = newText
   //   this._callSubscriber(this._state)
   // }
+}
+
+export const addPostAC = (text: string): AddPostActionType => {
+  return { type: ADD_POST, postMessage: text }
+}
+
+export const updatePostTextAC = (newText: string): UpdatePostTextType => {
+  return {
+    type: UPDATE_POST_TEXT,
+    newText: newText
+  }
 }
 //
 //STORE END

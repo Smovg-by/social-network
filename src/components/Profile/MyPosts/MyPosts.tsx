@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  ActionType,
-  AddPostActionType,
-  ChangeNewTextActionType
-} from '../../../redux/state'
+import { ActionType, addPostAC, updatePostTextAC } from '../../../redux/state'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
@@ -20,6 +16,7 @@ export type PostElementType = {
   id: number
   message: string
 }
+
 //
 // -----MyPosts component start
 //
@@ -36,7 +33,7 @@ export function MyPosts (props: MyPostsPropsType) {
     if (text) {
       // заменили отдельные методы на dispatch
       // props.addPost(text)
-      props.dispatch({ type: 'ADD_POST', postMessage: text })
+      props.dispatch(addPostAC(text))
     }
   }
 
@@ -49,10 +46,8 @@ export function MyPosts (props: MyPostsPropsType) {
           <textarea
             // TODO вынести функцию из JSX (e: ChangeEvent<HTMLTextAreaElement> )
             onChange={e => {
-              props.dispatch({
-                type: 'UPDATE_POST_TEXT',
-                newText: e.currentTarget.value
-              })
+              let newText = e.currentTarget.value
+              props.dispatch(updatePostTextAC(newText))
             }}
             ref={newPostElement}
             value={props.newPostText}
