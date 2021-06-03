@@ -1,13 +1,11 @@
-import classes from './Dialogs.module.css'
-import { DialogItem } from './DialogItem/DialogItem'
-import { Message } from './Message/Message'
 import {
-  Messages,
-  Dialog,
-  UpdateNewMessageBodyAC,
-  ActionType,
-  SendMessageAC
-} from '../../redux/state'
+  SendMessageAC,
+  UpdateNewMessageBodyAC
+} from '../../redux/dialogsReducer'
+import { ActionType, Dialog, Messages } from '../../redux/state'
+import { DialogItem } from './DialogItem/DialogItem'
+import classes from './Dialogs.module.css'
+import { Message } from './Message/Message'
 
 type DialogsComponentDataType = {
   dialogsData: Array<Dialog>

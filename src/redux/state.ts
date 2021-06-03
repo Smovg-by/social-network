@@ -2,10 +2,9 @@
 //STORE START
 //
 
-export const ADD_POST: 'ADD_POST' = 'ADD_POST'
-export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
-export const UPDATE_NEW_MESSAGE_BODY: 'UPDATE_NEW_MESSAGE_BODY' =
-  'UPDATE_NEW_MESSAGE_BODY'
+import dialogsReducer from './dialogsReducer'
+import { profileReducer } from './profileReducer'
+import sidebarReducer from './sideBarReducer'
 
 export type Dialog = {
   id: number
@@ -131,38 +130,44 @@ export let store: StoreType = {
       }
     ]
   },
-  _callSubscriber() {
+  _callSubscriber () {
     console.log('state has been changed')
   },
-  subscribe(callback) {
+  subscribe (callback) {
     this._callSubscriber = callback
   },
-  getState() {
+  getState () {
     return this._state
   },
 
-  dispatch(action: ActionType) {
-    if (action.type === ADD_POST) {
-      let newPost = {
-        id: 5,
-        message: action.postMessage,
-        likesCount: 0
-      }
-      this._state.profilePage.posts.unshift(newPost)
-      this._state.profilePage.newPostText = ''
-      this._callSubscriber(this._state)
-    } else if (action.type === UPDATE_POST_TEXT) {
-      this._state.profilePage.newPostText = action.newText
-      this._callSubscriber(this._state)
-    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-      this._state.dialogsPage.newMessageBody = action.body
-      this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
-    } else if (action.type === 'SEND_MESSAGE') {
-      let body = this._state.dialogsPage.newMessageBody
-      this._state.dialogsPage.newMessageBody = ''
-      this._state.dialogsPage.messages.push({ id: 6, message: body })
-      this._callSubscriber(this._state)
-    } else return this._state
+  dispatch (action: ActionType) {
+    this._state.profilePage = profileReducer(this._state.profilePage, action)
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    this._state.sideBarData = sidebarReducer(this._state.sideBarData, action)
+
+    this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
+
+    // if (action.type === ADD_POST) {
+    //   let newPost = {
+    //     id: 5,
+    //     message: action.postMessage,
+    //     likesCount: 0
+    //   }
+    //   this._state.profilePage.posts.unshift(newPost)
+    //   this._state.profilePage.newPostText = ''
+    //   this._callSubscriber(this._state)
+    // } else if (action.type === UPDATE_POST_TEXT) {
+    //   this._state.profilePage.newPostText = action.newText
+    //   this._callSubscriber(this._state)
+    // } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+    //   this._state.dialogsPage.newMessageBody = action.body
+    //   this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
+    // } else if (action.type === 'SEND_MESSAGE') {
+    //   let body = this._state.dialogsPage.newMessageBody
+    //   this._state.dialogsPage.newMessageBody = ''
+    //   this._state.dialogsPage.messages.push({ id: 6, message: body })
+    //   this._callSubscriber(this._state)
+    // } else return this._state
   }
 
   // addPost (postMessage: string) {
@@ -181,31 +186,6 @@ export let store: StoreType = {
   // }
 }
 
-export const addPostAC = (text: string): AddPostActionType => {
-  return { type: ADD_POST, postMessage: text }
-}
-
-export const updatePostTextAC = (newText: string): UpdatePostTextType => {
-  return {
-    type: UPDATE_POST_TEXT,
-    newText: newText
-  }
-}
-export const UpdateNewMessageBodyAC = (text: string): UpdateNewMessageBodyActionType => {
-  return {
-    type: 'UPDATE_NEW_MESSAGE_BODY',
-    body: text
-  }
-}
-
-export const SendMessageAC = (text: string): SendMessageActionType => {
-  return {
-    type: 'SEND_MESSAGE',
-    body: text
-  }
-}
 //
 //STORE END
 //
-
-//TODO передать store в пропсы при вызове App
