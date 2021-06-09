@@ -1,6 +1,6 @@
 import React from 'react'
 import { addPostAC, updatePostTextAC } from '../../../redux/profileReducer'
-import { ActionType } from '../../../redux/state'
+import { ActionType } from '../../../redux/store'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
@@ -23,8 +23,8 @@ export type PostElementType = {
 //
 export function MyPosts (props: MyPostsPropsType) {
   //---BLL
-  let postsElements = props.postsData.map(item => {
-    return <Post message={item.message} />
+  let postsElements = props.postsData.map((item, i) => {
+    return <Post key={i} message={item.message} />
   })
 
   let newPostElement = React.createRef<HTMLTextAreaElement>()

@@ -79,6 +79,8 @@ export type ActionType =
   | UpdateNewMessageBodyActionType
   | SendMessageActionType
 
+// STORE
+
 export let store: StoreType = {
   _state: {
     profilePage: {
@@ -146,44 +148,7 @@ export let store: StoreType = {
     this._state.sideBarData = sidebarReducer(this._state.sideBarData, action)
 
     this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
-
-    // if (action.type === ADD_POST) {
-    //   let newPost = {
-    //     id: 5,
-    //     message: action.postMessage,
-    //     likesCount: 0
-    //   }
-    //   this._state.profilePage.posts.unshift(newPost)
-    //   this._state.profilePage.newPostText = ''
-    //   this._callSubscriber(this._state)
-    // } else if (action.type === UPDATE_POST_TEXT) {
-    //   this._state.profilePage.newPostText = action.newText
-    //   this._callSubscriber(this._state)
-    // } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-    //   this._state.dialogsPage.newMessageBody = action.body
-    //   this._callSubscriber(this._state) // передаем изменившийстя стейт для перерировки
-    // } else if (action.type === 'SEND_MESSAGE') {
-    //   let body = this._state.dialogsPage.newMessageBody
-    //   this._state.dialogsPage.newMessageBody = ''
-    //   this._state.dialogsPage.messages.push({ id: 6, message: body })
-    //   this._callSubscriber(this._state)
-    // } else return this._state
   }
-
-  // addPost (postMessage: string) {
-  //   let newPost = {
-  //     id: 5,
-  //     message: postMessage,
-  //     likesCount: 0
-  //   }
-  //   this._state.profilePage.posts.unshift(newPost)
-  //   this._state.profilePage.newPostText = ''
-  //   this._callSubscriber(this._state)
-  // },
-  // updatePostText (newText: string) {
-  //   this._state.profilePage.newPostText = newText
-  //   this._callSubscriber(this._state)
-  // }
 }
 
 //

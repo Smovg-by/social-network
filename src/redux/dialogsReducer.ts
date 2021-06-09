@@ -2,7 +2,7 @@ import {
   ActionType,
   SendMessageActionType,
   UpdateNewMessageBodyActionType
-} from './state'
+} from './store'
 
 export const UPDATE_NEW_MESSAGE_BODY: 'UPDATE_NEW_MESSAGE_BODY' =
   'UPDATE_NEW_MESSAGE_BODY'
@@ -24,9 +24,48 @@ export const SendMessageAC = (text: string): SendMessageActionType => {
   }
 }
 
+type Dialog = {
+  id: number
+  name: string
+}
+
+type Messages = {
+  id: number
+  message: string
+}
+
+type InitialStateType = {
+  dialogs: Array<Dialog>
+  messages: Array<Messages>
+  newMessageBody: string
+}
+
+const initialState = {
+  dialogs: [
+    { id: 1, name: 'Dimych' },
+    { id: 2, name: 'Andrey' },
+    { id: 3, name: 'Sveta' },
+    { id: 4, name: 'Sasha' },
+    { id: 5, name: 'Victor' },
+    { id: 6, name: 'Valera' }
+  ],
+  messages: [
+    { id: 1, message: 'Hello!' },
+    { id: 2, message: 'How is yor IT kamasutra?' },
+    { id: 3, message: 'Yo!' },
+    { id: 4, message: 'Yo!' },
+    { id: 5, message: 'Yo!' },
+    { id: 6, message: 'Yo!' }
+  ],
+  newMessageBody: ''
+}
+
 //state = this._state.dialogsPage
 
-export const dialogsReducer = (state: any, action: ActionType) => {
+export const dialogsReducer = (
+  state: InitialStateType = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY:
       state.newMessageBody = action.body
@@ -39,17 +78,6 @@ export const dialogsReducer = (state: any, action: ActionType) => {
     default:
       return state
   }
-
-  // if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-  //   state.newMessageBody = action.body
-  //   // this._callSubscriber(this._state)
-  // } else if (action.type === 'SEND_MESSAGE') {
-  //   let body = state.newMessageBody
-  //   state.newMessageBody = ''
-  //   state.messages.push({ id: 6, message: body })
-  //   // this._callSubscriber(this._state)
-  // }
-  // return state
 }
 
 export default dialogsReducer

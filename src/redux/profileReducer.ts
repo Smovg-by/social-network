@@ -1,4 +1,4 @@
-import { ActionType, AddPostActionType, UpdatePostTextType } from './state'
+import { ActionType, AddPostActionType, UpdatePostTextType } from './store'
 
 export const ADD_POST: 'ADD_POST' = 'ADD_POST'
 export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
@@ -14,9 +14,31 @@ export const updatePostTextAC = (newText: string): UpdatePostTextType => {
   }
 }
 
-// state = this._state.profilePage
+type Posts = {
+  id: number
+  message: string
+  likesCount: number
+}
 
-export const profileReducer = (state: any, action: ActionType) => {
+type InitialStateType = {
+  newPostText: string
+  posts: Array<Posts>
+}
+
+let initialState = {
+  newPostText: 'it-kamasutra',
+  posts: [
+    { id: 1, message: 'Hi! How are you?', likesCount: 12 },
+    { id: 2, message: 'It is my first post', likesCount: 11 },
+    { id: 3, message: 'BlaBla', likesCount: 11 },
+    { id: 4, message: 'Dada', likesCount: 11 }
+  ]
+}
+
+export const profileReducer = (
+  state: InitialStateType = initialState,
+  action: ActionType
+) => {
   switch (action.type) {
     case ADD_POST:
       let newPost = {
@@ -33,17 +55,4 @@ export const profileReducer = (state: any, action: ActionType) => {
     default:
       return state
   }
-
-  // if (action.type === ADD_POST) {
-  //   let newPost = {
-  //     id: 5,
-  //     message: action.postMessage,
-  //     likesCount: 0
-  //   }
-  //   state.posts.unshift(newPost)
-  //   state.newPostText = ''
-  // } else if (action.type === UPDATE_POST_TEXT) {
-  //   state.newPostText = action.newText
-  // }
-  // return state
 }

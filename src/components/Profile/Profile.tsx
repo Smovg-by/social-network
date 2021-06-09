@@ -1,6 +1,6 @@
 import { MyPosts } from './MyPosts/MyPosts'
 import { ProfileInfo } from './MyPosts/ProfileInfo/ProfileInfo'
-import { ActionType } from '../../redux/state'
+import { ActionType } from '../../redux/store'
 
 export type ProfilePropsType = {
   postsData: Array<PostElementType>

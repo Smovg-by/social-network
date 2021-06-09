@@ -2,7 +2,7 @@ import {
   SendMessageAC,
   UpdateNewMessageBodyAC
 } from '../../redux/dialogsReducer'
-import { ActionType, Dialog, Messages } from '../../redux/state'
+import { ActionType, Dialog, Messages } from '../../redux/store'
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
@@ -19,12 +19,12 @@ export type MessageType = {
 }
 
 export function Dialogs (props: DialogsComponentDataType) {
-  let dialogsElements = props.dialogsData.map(item => {
-    return <DialogItem id={item.id} name={item.name} />
+  let dialogsElements = props.dialogsData.map((item, i) => {
+    return <DialogItem key={i} id={item.id} name={item.name} />
   })
 
-  let messagesElements = props.messagesData.map(item => {
-    return <Message message={item.message} />
+  let messagesElements = props.messagesData.map((item, i) => {
+    return <Message key={i} message={item.message} />
   })
   let newMessageBody = props.newMessageBody
 
