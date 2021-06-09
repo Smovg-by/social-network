@@ -1,17 +1,14 @@
-import {
-  SendMessageAC,
-  UpdateNewMessageBodyAC
-} from '../../redux/dialogsReducer'
-import { ActionType, Dialog, Messages } from '../../redux/store'
+import { Dialog, Messages } from '../../redux/store'
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
 
 type DialogsComponentDataType = {
-  dialogsData: Array<Dialog>
+  UpdateNewMessageBody: (newText: string) => void
+  SendMessage: (newText: string) => void
   messagesData: Array<Messages>
+  dialogsData: Array<Dialog>
   newMessageBody: string
-  dispatch: (action: ActionType) => void
 }
 
 export type MessageType = {
@@ -29,11 +26,9 @@ export function Dialogs (props: DialogsComponentDataType) {
   let newMessageBody = props.newMessageBody
 
   let onSendMessageClick = () => {
-    let text = props.newMessageBody //? значит, что в этом поле может быть Null
-    if (text) {
-      // заменили отдельные методы на dispatch
-      // props.addPost(text)
-      props.dispatch(SendMessageAC(text))
+    let newText = props.newMessageBody //? значит, что в этом поле может быть Null
+    if (newText) {
+      props.SendMessage(newText)
     }
   }
 
@@ -47,7 +42,7 @@ export function Dialogs (props: DialogsComponentDataType) {
             <textarea
               onChange={e => {
                 let newText = e.currentTarget.value
-                props.dispatch(UpdateNewMessageBodyAC(newText))
+                props.UpdateNewMessageBody(newText)
               }}
               value={newMessageBody}
               placeholder='Enter your message'

@@ -1,16 +1,12 @@
 import React from 'react'
-import { addPostAC, updatePostTextAC } from '../../../redux/profileReducer'
-import { ActionType } from '../../../redux/store'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
 export type MyPostsPropsType = {
   postsData: Array<PostElementType>
   newPostText: string
-  dispatch: (action: ActionType) => void
-  // заменили отдельные методы на dispatch
-  // updatePostText: (newText: ChangeNewTextActionType) => void
-  // addPost: (postMessage: AddPostActionType) => void
+  updateNewPostText: (newText: string) => void
+  addPost: (newText: string) => void
 }
 
 export type PostElementType = {
@@ -30,11 +26,9 @@ export function MyPosts (props: MyPostsPropsType) {
   let newPostElement = React.createRef<HTMLTextAreaElement>()
 
   let addPost = () => {
-    let text = props.newPostText //? значит, что в этом поле может быть Null
-    if (text) {
-      // заменили отдельные методы на dispatch
-      // props.addPost(text)
-      props.dispatch(addPostAC(text))
+    let newText = props.newPostText
+    if (newText) {
+      props.addPost(newText)
     }
   }
 
@@ -48,7 +42,7 @@ export function MyPosts (props: MyPostsPropsType) {
             // TODO вынести функцию из JSX (e: ChangeEvent<HTMLTextAreaElement> )
             onChange={e => {
               let newText = e.currentTarget.value
-              props.dispatch(updatePostTextAC(newText))
+              props.updateNewPostText(newText)
             }}
             ref={newPostElement}
             value={props.newPostText}
