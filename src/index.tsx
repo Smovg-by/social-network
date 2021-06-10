@@ -4,6 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
+import { StoreContext } from './StoreContext'
 
 console.log(store)
 
@@ -11,7 +12,9 @@ console.log(store)
 export let renderTree = (store: any) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App store={store} />
+      <StoreContext.Provider value={store}>
+        <App store={store} />
+      </StoreContext.Provider>
     </React.StrictMode>,
     document.getElementById('root')
   )
