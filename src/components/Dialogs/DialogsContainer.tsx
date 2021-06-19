@@ -25,12 +25,12 @@ export function DialogsContainer (props: DialogsComponentDataType) {
         let state = store.getState()
 
         let updateNewMessageBody = (newText: string) => {
-          props.dispatch(UpdateNewMessageBodyAC(newText))
+          store.dispatch(UpdateNewMessageBodyAC(newText))
         }
 
         let onSendMessageClick = (newText: string) => {
           if (newText) {
-            props.dispatch(SendMessageAC(newText))
+            store.dispatch(SendMessageAC(newText))
           }
         }
 
@@ -38,9 +38,9 @@ export function DialogsContainer (props: DialogsComponentDataType) {
           <Dialogs
             UpdateNewMessageBody={updateNewMessageBody}
             SendMessage={onSendMessageClick}
-            messagesData={state.dialogsPage.messages}
-            dialogsData={state.dialogsPage.dialogs}
-            newMessageBody={state.dialogsPage.newMessageBody}
+            messagesData={store.getState().dialogsPage.messages}
+            dialogsData={store.getState().dialogsPage.dialogs}
+            newMessageBody={store.getState().dialogsPage.newMessageBody}
           />
         )
       }}
