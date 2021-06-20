@@ -21,6 +21,7 @@ type MapStatePropsType = {
 let mapStateToProps = (state: RootStateType): MapStatePropsType => {
   return {
     // отправляем данные из СТЕЙТА
+    // Dilogs перерисуется, если мы изменим это поле
     dialogsPage: state.dialogsPage
   }
 }
