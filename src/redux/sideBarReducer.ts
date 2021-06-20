@@ -32,7 +32,7 @@ const initialState = [
 export const sidebarReducer = (
   state: InitialStateType = initialState,
   action: ActionType
-) => {
+): InitialStateType => {
   // code
 
   return state

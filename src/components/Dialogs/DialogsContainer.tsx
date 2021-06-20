@@ -3,14 +3,22 @@ import {
   SendMessageAC,
   UpdateNewMessageBodyAC
 } from '../../redux/dialogsReducer'
-import { ActionType, RootStateType } from '../../redux/store'
+import {
+  ActionType,
+  dialogsPageType,
+  RootStateType
+} from '../../redux/redux-store'
 import { Dialogs } from './Dialogs'
 
 export type MessageType = {
   message: string
 }
 
-let mapStateToProps = (state: RootStateType) => {
+type MapStatePropsType = {
+  dialogsPage: dialogsPageType
+}
+
+let mapStateToProps = (state: RootStateType): MapStatePropsType => {
   return {
     // отправляем данные из СТЕЙТА
     dialogsPage: state.dialogsPage

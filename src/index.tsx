@@ -7,19 +7,19 @@ import App from './App'
 import { Provider } from 'react-redux'
 
 //TODO типизация store
-export let renderTree = (store: any) => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <App store={store} />
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-  )
-}
+// export let renderTree = (store: any) => {
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App store={store} />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+// }
 
-renderTree(store)
+// renderTree(store)
 
-store.subscribe(() => {
-  renderTree(store)
-})
+// store.subscribe(() => {
+//   renderTree(store)
+// })
