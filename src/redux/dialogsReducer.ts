@@ -60,8 +60,6 @@ const initialState = {
   newMessageBody: ''
 }
 
-//state = this._state.dialogsPage
-
 export const dialogsReducer = (
   state: InitialStateType = initialState,
   action: ActionType
@@ -72,7 +70,7 @@ export const dialogsReducer = (
       return state
     case SEND_MESSAGE:
       let body = state.newMessageBody
-      state.newMessageBody = ''
+      state.newMessageBody = 'kkk'
       state.messages.push({ id: 6, message: body })
       return state
     default:

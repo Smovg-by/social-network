@@ -4,15 +4,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import { Provider } from './StoreContext'
-
-console.log(store)
+import { Provider } from 'react-redux'
 
 //TODO типизация store
 export let renderTree = (store: any) => {
   ReactDOM.render(
     <React.StrictMode>
-      <Provider value={store}>
+      <Provider store={store}>
         <App store={store} />
       </Provider>
     </React.StrictMode>,

@@ -18,9 +18,9 @@ export function Profile (props: ProfilePropsType) {
     <div>
       <ProfileInfo />
       <MyPostsContainer
-        postsData={props.postsData}
-        newPostText={props.newPostText}
-        dispatch={props.dispatch}
+      // postsData={props.postsData}
+      // newPostText={props.newPostText}
+      // dispatch={props.dispatch}
       />
     </div>
   )
