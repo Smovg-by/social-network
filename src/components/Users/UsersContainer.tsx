@@ -8,6 +8,9 @@ import {
   unFollowAC,
   UserType
 } from '../../redux/usersReducer'
+import { Dispatch } from 'redux'
+
+export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
 
 type MapStatePropsType = {
   users: Array<UserType>
@@ -18,7 +21,14 @@ let mapStateToProps = (state: RootStateType): MapStatePropsType => {
     users: state.usersPage.users
   }
 }
-let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
+
+type mapDispatchPropsType = {
+  follow: (userId: number) => void
+  unfollow: (userId: number) => void
+  setUsers: (users: Array<UserType>) => void
+}
+
+let mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
   return {
     follow: (userId: number) => {
       dispatch(followAC(userId))

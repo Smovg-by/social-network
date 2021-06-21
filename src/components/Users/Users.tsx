@@ -1,12 +1,5 @@
-import { UserType } from '../../redux/usersReducer'
 import styles from './Users.module.css'
-
-type UsersPropsType = {
-  users: Array<UserType>
-  follow: (userId: number) => void
-  unfollow: (userId: number) => void
-  setUsers: (users: Array<UserType>) => void
-}
+import { UsersPropsType } from './UsersContainer'
 
 export const Users = (props: UsersPropsType) => {
   // BLL

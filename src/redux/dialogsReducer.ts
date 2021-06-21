@@ -24,21 +24,23 @@ export const SendMessageAC = (text: string): SendMessageActionType => {
   }
 }
 
-type Dialog = {
+type DialogType = {
   id: number
   name: string
 }
 
-type Messages = {
+type MessagesType = {
   id: number
   message: string
 }
+// вместо прописывания типизации вручную можно взять ее из объекта
+type InitialStateType = typeof initialState
 
-type InitialStateType = {
-  dialogs: Array<Dialog>
-  messages: Array<Messages>
-  newMessageBody: string
-}
+// type InitialStateType = {
+//   dialogs: Array<Dialog>
+//   messages: Array<Messages>
+//   newMessageBody: string
+// }
 
 const initialState = {
   dialogs: [
@@ -48,7 +50,8 @@ const initialState = {
     { id: 4, name: 'Sasha' },
     { id: 5, name: 'Victor' },
     { id: 6, name: 'Valera' }
-  ],
+    // typescript не берет автоматически типизации с глубоких вложенностей, типизируем отдельно
+  ] as Array<DialogType>,
   messages: [
     { id: 1, message: 'Hello!' },
     { id: 2, message: 'How is yor IT kamasutra?' },
@@ -56,7 +59,8 @@ const initialState = {
     { id: 4, message: 'Yo!' },
     { id: 5, message: 'Yo!' },
     { id: 6, message: 'Yo!' }
-  ],
+    // typescript не берет автоматически типизации с глубоких вложенностей, типизируем отдельно
+  ] as Array<MessagesType>,
   newMessageBody: ''
 }
 
