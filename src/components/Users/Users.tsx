@@ -5,57 +5,21 @@ import usePhoto from '../../assets/images/user_ico.jpg'
 
 export const Users = (props: UsersPropsType) => {
   // BLL
-  if (props.users.length === 0) {
-    axios
-      .get('https://social-network.samuraijs.com/api/1.0/users')
-      .then(response => {
-        props.setUsers(response.data.items)
-      })
-  }
 
-  //   props.setUsers([
-  //     {
-  //       id: 1,
-  //       photoUrl:
-  //         'https://www.vokrug.tv/pic/news/f/d/a/f/fdafa4953b333881d795aeac1b0e392a.jpg',
-  //       followed: false,
-  //       fullName: 'Stan',
-  //       status: 'I am a boss',
-  //       location: { city: 'Minsk', country: 'Belarus' }
-  //     },
-  //     {
-  //       id: 2,
-  //       photoUrl:
-  //         'https://www.vokrug.tv/pic/news/f/d/a/f/fdafa4953b333881d795aeac1b0e392a.jpg',
-  //       followed: true,
-  //       fullName: 'John',
-  //       status: 'I am Stan',
-  //       location: { city: 'Moscow', country: 'Russia' }
-  //     },
-  //     {
-  //       id: 3,
-  //       photoUrl:
-  //         'https://www.vokrug.tv/pic/news/f/d/a/f/fdafa4953b333881d795aeac1b0e392a.jpg',
-  //       followed: true,
-  //       fullName: 'Michael',
-  //       status: 'I am Michael',
-  //       location: { city: 'Kiev', country: 'Ukraine' }
-  //     },
-  //     {
-  //       id: 4,
-  //       photoUrl:
-  //         'https://www.vokrug.tv/pic/news/f/d/a/f/fdafa4953b333881d795aeac1b0e392a.jpg',
-  //       followed: false,
-  //       fullName: 'Eric',
-  //       status: 'I am Eric',
-  //       location: { city: 'Boston', country: 'USA' }
-  //     }
-  //   ])
-  // }
+  let getUsers = () => {
+    if (props.users.length === 0) {
+      axios
+        .get('https://social-network.samuraijs.com/api/1.0/users')
+        .then(response => {
+          props.setUsers(response.data.items)
+        })
+    }
+  }
 
   // UI
   return (
     <div>
+      <button onClick={getUsers}>Get users</button>
       {props.users.map(u => {
         return (
           <div key={u.id}>
