@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { RootStateType } from '../../redux/redux-store'
 import { Users } from './Users'
 import {
-  ActionType,
   followAC,
   setUsersAC,
   unFollowAC,

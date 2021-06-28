@@ -29,18 +29,19 @@ export const setUsersAC = (users: Array<UserType>): SetUsersType => {
 }
 
 // INITIAL STATE
-type LocationType = {
-  city: string
-  country: string
+
+type UserPhotosType = {
+  small: string
+  large: string
 }
 
 export type UserType = {
+  name: string
   id: number
-  photoUrl: string
+  uniqueUrlName: string | null
+  photos: UserPhotosType
+  status: string | null
   followed: boolean
-  fullName: string
-  status: string
-  location: LocationType
 }
 
 type InitialStateType = {
