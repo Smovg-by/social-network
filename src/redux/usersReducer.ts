@@ -41,24 +41,24 @@ type SetToggleIsFetchingType = {
   isFetching: boolean
 }
 
-export const followAC = (userId: number): FollowType => {
+export const follow = (userId: number): FollowType => {
   return { type: FOLLOW, userId: userId }
 }
-export const unFollowAC = (userId: number): UnFollowType => {
+export const unfollow = (userId: number): UnFollowType => {
   return { type: UNFOLLOW, userId: userId }
 }
-export const setUsersAC = (users: Array<UserType>): SetUsersType => {
+export const setUsers = (users: Array<UserType>): SetUsersType => {
   return { type: SET_USERS, users: users }
 }
-export const setCurrentPageAC = (currentPage: number): SetCurrentPageType => {
+export const setCurrentPage = (currentPage: number): SetCurrentPageType => {
   return { type: SET_CURRENT_PAGE, currentPage: currentPage }
 }
-export const setTotalUsersCountAC = (
+export const setTotalUsersCount = (
   totalCount: number
 ): SetTotalUsersCountType => {
   return { type: SET_TOTAL_USERS_COUNT, totalCount: totalCount }
 }
-export const setToggleIsFetchingAC = (
+export const toggleIsFetching = (
   isFetching: boolean
 ): SetToggleIsFetchingType => {
   return { type: TOGGLE_IS_FETCHING, isFetching: isFetching }
