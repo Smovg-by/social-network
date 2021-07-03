@@ -2,8 +2,15 @@
 const FOLLOW: 'FOLLOW' = 'FOLLOW'
 const UNFOLLOW: 'UNFOLLOW' = 'UNFOLLOW'
 const SET_USERS: 'SET_USERS' = 'SET_USERS'
+const SET_CURRENT_PAGE: 'SET_CURRENT_PAGE' = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT: 'SET_TOTAL_USERS_COUNT' = 'SET_TOTAL_USERS_COUNT'
 
-export type ActionType = FollowType | UnFollowType | SetUsersType
+export type ActionType =
+  | FollowType
+  | UnFollowType
+  | SetUsersType
+  | SetCurrentPageType
+  | SetTotalUsersCountType
 
 type FollowType = {
   type: 'FOLLOW'
@@ -17,6 +24,14 @@ type SetUsersType = {
   type: 'SET_USERS'
   users: Array<UserType>
 }
+type SetCurrentPageType = {
+  type: 'SET_CURRENT_PAGE'
+  currentPage: number
+}
+type SetTotalUsersCountType = {
+  type: 'SET_TOTAL_USERS_COUNT'
+  totalCount: number
+}
 
 export const followAC = (userId: number): FollowType => {
   return { type: FOLLOW, userId: userId }
@@ -26,6 +41,14 @@ export const unFollowAC = (userId: number): UnFollowType => {
 }
 export const setUsersAC = (users: Array<UserType>): SetUsersType => {
   return { type: SET_USERS, users: users }
+}
+export const setCurrentPageAC = (currentPage: number): SetCurrentPageType => {
+  return { type: SET_CURRENT_PAGE, currentPage: currentPage }
+}
+export const setTotalUsersCountAC = (
+  totalCount: number
+): SetTotalUsersCountType => {
+  return { type: SET_TOTAL_USERS_COUNT, totalCount: totalCount }
 }
 
 // INITIAL STATE
@@ -46,10 +69,16 @@ export type UserType = {
 
 type InitialStateType = {
   users: Array<UserType>
+  pageSize: number
+  totalUsersCount: number
+  currentPage: number
 }
 
 let initialState: InitialStateType = {
-  users: []
+  users: [],
+  pageSize: 20,
+  totalUsersCount: 0,
+  currentPage: 3
 }
 
 // REDUCER
@@ -86,7 +115,13 @@ export const usersReducer = (
 
     case SET_USERS:
       // массив пользователей будем получать от сервера. Склеиваем два массива, которые были и которые пришли
-      return { ...state, users: [...state.users, ...action.users] }
+      return { ...state, users: action.users }
+
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.currentPage }
+
+    case SET_TOTAL_USERS_COUNT:
+      return { ...state, totalUsersCount: action.totalCount }
 
     default:
       return state
