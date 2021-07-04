@@ -1,13 +1,17 @@
-import React from 'react'
 import classes from './Navbar.module.css'
 import { NavLink } from 'react-router-dom'
-import { Friends } from '../../redux/store'
 
 type NavbarPropsData = {
   sideBarData: Array<Friends>
 }
 
-export function Navbar (props: NavbarPropsData) {
+export type Friends = {
+  id: number
+  name: string
+  avatar: string
+}
+
+export function Navbar(props: NavbarPropsData) {
   let friends = props.sideBarData.map((item, i) => {
     return (
       <li key={i}>

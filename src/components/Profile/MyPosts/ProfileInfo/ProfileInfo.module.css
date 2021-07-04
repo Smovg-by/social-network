@@ -1,4 +1,5 @@
 .descriptionBlock {
     padding: 10px;
-    color: red;
+    font-weight: bold;
+    color: darkgreen;
 }

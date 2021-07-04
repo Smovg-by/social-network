@@ -7,7 +7,7 @@ type PreloaderPropsType = {
 export function Preloader(props: PreloaderPropsType) {
   return (
     <>
-      <img src={preloader} />
+      <img src={preloader} alt={'preloader'} />
     </>
   )
 }

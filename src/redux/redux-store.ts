@@ -40,6 +40,7 @@ export type Friends = {
 export type profilePageType = {
   newPostText: string
   posts: Array<Posts>
+  profile: any
 }
 
 export type dialogsPageType = {

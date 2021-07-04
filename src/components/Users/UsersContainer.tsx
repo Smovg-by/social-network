@@ -9,7 +9,6 @@ import {
   unfollow,
   UserType
 } from '../../redux/usersReducer'
-import { Dispatch } from 'redux'
 import axios from 'axios'
 import React from 'react'
 import { Users } from './Users'
@@ -71,7 +70,7 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
   }
 }
 
-export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
+// export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
 
 type MapStatePropsType = {
   users: Array<UserType>
@@ -91,14 +90,14 @@ let mapStateToProps = (state: RootStateType): MapStatePropsType => {
   }
 }
 
-type mapDispatchPropsType = {
-  follow: (userId: number) => void
-  unfollow: (userId: number) => void
-  setUsers: (users: Array<UserType>) => void
-  setCurrentPage: (currentPage: number) => void
-  setTotalUsersCount: (totalCount: number) => void
-  toggleIsFetching: (isFetching: boolean) => void
-}
+// type mapDispatchPropsType = {
+//   follow: (userId: number) => void
+//   unfollow: (userId: number) => void
+//   setUsers: (users: Array<UserType>) => void
+//   setCurrentPage: (currentPage: number) => void
+//   setTotalUsersCount: (totalCount: number) => void
+//   toggleIsFetching: (isFetching: boolean) => void
+// }
 
 // let mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
 //   return {

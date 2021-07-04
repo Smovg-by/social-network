@@ -1,4 +1,4 @@
-import { dialogsPageType } from '../../redux/store'
+
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
@@ -9,11 +9,27 @@ type DialogsComponentDataType = {
   dialogsPage: dialogsPageType
 }
 
+export type Dialog = {
+  id: number
+  name: string
+}
+
+export type Messages = {
+  id: number
+  message: string
+}
+
+export type dialogsPageType = {
+  dialogs: Array<Dialog>
+  messages: Array<Messages>
+  newMessageBody: string
+}
+
 export type MessageType = {
   message: string
 }
 
-export function Dialogs (props: DialogsComponentDataType) {
+export function Dialogs(props: DialogsComponentDataType) {
   let dialogsElements = props.dialogsPage.dialogs.map((item, i) => {
     return <DialogItem key={i} id={item.id} name={item.name} />
   })

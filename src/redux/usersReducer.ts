@@ -1,5 +1,3 @@
-import { truncate } from 'fs'
-
 // ACTION TYPES
 const FOLLOW: 'FOLLOW' = 'FOLLOW'
 const UNFOLLOW: 'UNFOLLOW' = 'UNFOLLOW'

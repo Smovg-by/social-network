@@ -1,9 +1,3 @@
-import {
-  ActionType,
-  SendMessageActionType,
-  UpdateNewMessageBodyActionType
-} from './store'
-
 export const UPDATE_NEW_MESSAGE_BODY: 'UPDATE_NEW_MESSAGE_BODY' =
   'UPDATE_NEW_MESSAGE_BODY'
 export const SEND_MESSAGE: 'SEND_MESSAGE' = 'SEND_MESSAGE'
@@ -33,6 +27,17 @@ type MessagesType = {
   id: number
   message: string
 }
+
+export type UpdateNewMessageBodyActionType = {
+  type: 'UPDATE_NEW_MESSAGE_BODY'
+  body: string
+}
+export type SendMessageActionType = {
+  type: 'SEND_MESSAGE'
+  body: string
+}
+
+export type ActionType = UpdateNewMessageBodyActionType | SendMessageActionType
 // вместо прописывания типизации вручную можно взять ее из объекта
 type InitialStateType = typeof initialState
 

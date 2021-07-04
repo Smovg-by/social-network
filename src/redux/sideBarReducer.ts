@@ -1,5 +1,3 @@
-import { ActionType } from './store'
-
 type Friends = {
   id: number
   name: string
@@ -31,7 +29,7 @@ const initialState = [
 
 export const sidebarReducer = (
   state: InitialStateType = initialState,
-  action: ActionType
+  action: any
 ): InitialStateType => {
   // code
 
