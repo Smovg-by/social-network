@@ -1,10 +1,15 @@
 import React from 'react';
+import { ProfileInfoType } from '../../../../redux/profileReducer';
 import { Preloader } from '../../../Common/Preloader/Preloader';
 import classes from './ProfileInfo.module.css';
 
-export function ProfileInfo(props: any) {
+type ProfileInfoPropsType = {
+  profile: ProfileInfoType
+}
 
-  if (!props.profile.photos.large) {
+export function ProfileInfo(props: ProfileInfoPropsType) {
+
+  if (!props.profile) {
     return <Preloader />
   }
 
@@ -17,7 +22,7 @@ export function ProfileInfo(props: any) {
       </div>
       <div className={classes.descriptionBlock}>
         <div>
-          <img src={props.profile.photos.large} />
+          <img src={props.profile.photos.large ? props.profile.photos.large : '#'} />
         </div>
         <div>
           {props.profile.aboutMe}

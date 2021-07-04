@@ -41,10 +41,36 @@ type Posts = {
   likesCount: number
 }
 
+export type ProfileInfoType = {
+  aboutMe: string | null
+  contacts: ProfileContactsType
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
+  fullName: string | null
+  userId: number
+  photos: ProfilePhotosType
+}
+
+export type ProfileContactsType = {
+  facebook: string | null
+  website: string | null
+  vk: string | null
+  twitter: string | null
+  instagram: string | null
+  youtube: string | null
+  github: string | null
+  mainLink: string | null
+}
+
+export type ProfilePhotosType = {
+  small: string | null
+  large: string | null
+}
+
 export type InitialStateType = {
   newPostText: string
   posts: Array<Posts>
-  profile: string
+  profile: null | ProfileInfoType
 }
 
 let initialState = {
@@ -55,7 +81,7 @@ let initialState = {
     { id: 3, message: 'BlaBla', likesCount: 11 },
     { id: 4, message: 'Dada', likesCount: 11 }
   ],
-  profile: 'this is a profile info'
+  profile: null
 }
 
 export const profileReducer = (

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Profile } from './Profile'
-import { InitialStateType, setUserProfile } from '../../redux/profileReducer'
+import { InitialStateType, ProfileInfoType, setUserProfile } from '../../redux/profileReducer'
 import { RootStateType } from '../../redux/redux-store'
 
 type ProfileContainerPropsType = {
@@ -32,7 +32,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 }
 
 type MapStateToPropsType = {
-  profile: any
+  profile: ProfileInfoType | null
 }
 
 let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
