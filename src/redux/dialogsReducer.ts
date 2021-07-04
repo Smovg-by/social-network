@@ -28,6 +28,12 @@ type MessagesType = {
   message: string
 }
 
+export type dialogsPageType = {
+  dialogs: Array<DialogType>
+  messages: Array<MessagesType>
+  newMessageBody: string
+}
+
 export type UpdateNewMessageBodyActionType = {
   type: 'UPDATE_NEW_MESSAGE_BODY'
   body: string

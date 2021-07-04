@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 import {
+  ActionType,
+  dialogsPageType,
   SendMessageAC,
   UpdateNewMessageBodyAC
 } from '../../redux/dialogsReducer'
 import {
-  ActionType,
-  dialogsPageType,
+
+
   RootStateType
 } from '../../redux/redux-store'
 import { Dialogs } from './Dialogs'
