@@ -24,7 +24,8 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
           <img src={props.profile.photos.large ? props.profile.photos.large : '#'} />
         </div>
         <div>
-          {props.profile.aboutMe}
+          <div>ABOUT ME: {props.profile.aboutMe}</div>
+          <div>ID: {props.profile.userId}</div>
         </div>
       </div>
     </div>

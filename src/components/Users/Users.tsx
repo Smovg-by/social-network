@@ -3,6 +3,7 @@ import styles from './Users.module.css'
 import userPhoto from '../../assets/images/user_ico.jpg'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
+import { followUsers, unFollowUsers } from '../../api/api'
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -15,7 +16,6 @@ type UsersPropsType = {
 }
 
 export let Users = (props: UsersPropsType) => {
-
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
   let pages = []
@@ -27,16 +27,23 @@ export let Users = (props: UsersPropsType) => {
   return (
     <div>
       <div>
-        {
-          pages.map((page) => {
-            return <span onClick={() => { props.onPageChanged(page) }}
+        {pages.map(page => {
+          return (
+            <span
+              onClick={() => {
+                props.onPageChanged(page)
+              }}
               className={
-                props.currentPage === page ?
-                  styles.selectedPage
-                  : styles.notSelectedPage}>   {page}   </span>
-          })
-        }
-
+                props.currentPage === page
+                  ? styles.selectedPage
+                  : styles.notSelectedPage
+              }
+            >
+              {' '}
+              {page}{' '}
+            </span>
+          )
+        })}
       </div>
       {props.users.map(u => {
         return (
@@ -46,42 +53,40 @@ export let Users = (props: UsersPropsType) => {
                 <NavLink to={'/profile/' + u.id}>
                   <img
                     src={u.photos.small !== null ? u.photos.small : userPhoto}
-                    className={styles.userPhoto} alt={'users avatar'}
-                  /></NavLink>
+                    className={styles.userPhoto}
+                    alt={'users avatar'}
+                  />
+                </NavLink>
               </div>
               <div>
                 {u.followed ? (
-                  <button onClick={() =>
-                    // this.props.toggleIsFetching(true)
-                    axios
-                      .delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                        withCredentials: true,
-                        headers: { "API-KEY": '807bff66-91a3-4004-98d0-0f1b7c813e8f' }
-                      })
-                      .then(response => {
-                        if (response.data.resultCode === 0) {
+                  <button
+                    onClick={() =>
+                      // this.props.toggleIsFetching(true)
+                      unFollowUsers(u.id).then(response => {
+                        if (response.resultCode === 0) {
                           props.unfollow(u.id)
                         }
                         // this.props.toggleIsFetching(false)
                       })
-
-                  }>Unfollow</button>
+                    }
+                  >
+                    Unfollow
+                  </button>
                 ) : (
-                  <button onClick={() =>
-                    // this.props.toggleIsFetching(true)
-                    axios
-                      .post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                        withCredentials: true,
-                        headers: { "API-KEY": '807bff66-91a3-4004-98d0-0f1b7c813e8f' }
-                      })
-                      .then(response => {
-                        if (response.data.resultCode === 0) {
+                  <button
+                    onClick={() =>
+                      // this.props.toggleIsFetching(true)
+                      followUsers(u.id).then(response => {
+                        if (response.resultCode === 0) {
                           props.follow(u.id)
                         }
                         // this.props.toggleIsFetching(false)
                       })
-
-                  }>Follow</button>
+                    }
+                  >
+                    Follow
+                  </button>
                 )}
               </div>
             </span>
