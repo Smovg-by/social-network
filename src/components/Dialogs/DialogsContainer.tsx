@@ -6,11 +6,10 @@ import {
   UpdateNewMessageBodyAC
 } from '../../redux/dialogsReducer'
 import {
-
-
-  RootStateType
+  AppStateType
 } from '../../redux/redux-store'
 import { Dialogs } from './Dialogs'
+
 
 export type MessageType = {
   message: string
@@ -20,7 +19,7 @@ type MapStatePropsType = {
   dialogsPage: dialogsPageType
 }
 
-let mapStateToProps = (state: RootStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     // отправляем данные из СТЕЙТА
     // Dilogs перерисуется, если мы изменим это поле

@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
-import { addPostAC, updatePostTextAC } from '../../../redux/profileReducer'
-import { AppStateType, ActionType, Posts } from '../../../redux/redux-store'
+import { ActionType, addPostAC, Posts, updatePostTextAC } from '../../../redux/profileReducer'
+
 import { MyPosts } from './MyPosts'
+import { AppStateType } from '../../../redux/redux-store'
 // data types
 type MapStatePropsType = {
   newPostText: string

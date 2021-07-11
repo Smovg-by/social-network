@@ -1,13 +1,22 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 import classes from './Header.module.css';
 
-export function Header() {
+type HeaderPropsType = {
+  login: string | null
+  isAuth: boolean
+}
+
+export function Header(props: HeaderPropsType) {
+
+
   return (
     <header className={classes.header}>
       <img
         src="https://www.phpro.be/uploads/media/sulu-100x100/00/440-react%404x.png?v=2-0"
-        alt="logo"/>
+        alt="logo" />
+      <div className={classes.loginBlock}>
+        {props.isAuth ? <div>{props.login}</div> : <NavLink to={'/login'}>Login</NavLink>}
+      </div>
     </header>
   )
 }
-

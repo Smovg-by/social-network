@@ -10,6 +10,8 @@ import { Settings } from './components/Settings/Settings'
 import { DialogsContainer } from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
+import HeaderContainer from './components/Header/HeaderContainer'
+
 
 
 
@@ -23,7 +25,7 @@ const App: React.FC<AppPropsType> = props => {
   return (
     <BrowserRouter>
       <div className='app-wrapper'>
-        <Header />
+        <HeaderContainer />
         <Navbar sideBarData={state.sideBarData} />
         <div className='app-wrapper-content'>
           <Route path='/dialogs' render={() => <DialogsContainer />} />

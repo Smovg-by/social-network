@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { RootStateType } from '../../redux/redux-store'
+import { AppStateType } from '../../redux/redux-store'
 import {
   follow,
   setCurrentPage,
@@ -70,8 +70,6 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
   }
 }
 
-// export type UsersPropsType = MapStatePropsType & mapDispatchPropsType
-
 type MapStatePropsType = {
   users: Array<UserType>
   pageSize: number
@@ -80,7 +78,7 @@ type MapStatePropsType = {
   isFetching: boolean
 }
 
-let mapStateToProps = (state: RootStateType): MapStatePropsType => {
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     users: state.usersPage.users,
     pageSize: state.usersPage.pageSize,
@@ -89,38 +87,6 @@ let mapStateToProps = (state: RootStateType): MapStatePropsType => {
     isFetching: state.usersPage.isFetching,
   }
 }
-
-// type mapDispatchPropsType = {
-//   follow: (userId: number) => void
-//   unfollow: (userId: number) => void
-//   setUsers: (users: Array<UserType>) => void
-//   setCurrentPage: (currentPage: number) => void
-//   setTotalUsersCount: (totalCount: number) => void
-//   toggleIsFetching: (isFetching: boolean) => void
-// }
-
-// let mapDispatchToProps = (dispatch: Dispatch): mapDispatchPropsType => {
-//   return {
-//     follow: (userId: number) => {
-//       dispatch(followAC(userId))
-//     },
-//     unfollow: (userId: number) => {
-//       dispatch(unFollowAC(userId))
-//     },
-//     setUsers: (users: Array<UserType>) => {
-//       dispatch(setUsersAC(users))
-//     },
-//     setCurrentPage: (currentPage: number) => {
-//       dispatch(setCurrentPageAC(currentPage))
-//     },
-//     setTotalUsersCount: (totalCount: number) => {
-//       dispatch(setTotalUsersCountAC(totalCount))
-//     },
-//     toggleIsFetching: (isFetching: boolean) => {
-//       dispatch(setToggleIsFetchingAC(isFetching))
-//     },
-//   }
-// }
 
 export default connect(
   mapStateToProps,

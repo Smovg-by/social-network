@@ -35,7 +35,7 @@ export type ActionType =
   | UpdatePostTextType
   | setUserProfileType
 
-type Posts = {
+export type Posts = {
   id: number
   message: string
   likesCount: number

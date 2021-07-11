@@ -3,6 +3,15 @@
     background-color: saddlebrown;
 }
 
+.loginBlock {
+    float: right;
+    margin: 10px 10px;
+}
+
+.loginBlock a {
+    color: white
+}
+
 /*.header > img {*/
 /*    width: 50px;*/
 /*}*/
