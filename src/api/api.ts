@@ -12,6 +12,11 @@ type userAPIType = {
   followUsers: (id: number) => Promise<followUsersResponseType>
   unFollowUsers: (id: number) => Promise<unFollowUsersResponseType>
   getProfileInfo: (userId: string) => Promise<getProfileInfoResponseType>
+
+}
+
+type authAPIType = {
+  me: () => Promise<any>
 }
 
 type getUsersResponseType = {
@@ -70,5 +75,12 @@ export const userAPI: userAPIType = {
 
   getProfileInfo(userId: string) {
     return instance.get(`profile/` + userId)
-  }
+  },
+
+}
+
+export const authAPI: authAPIType = {
+  me() {
+    return instance.get(`auth/me`)
+  },
 }

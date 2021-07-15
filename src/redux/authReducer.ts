@@ -1,3 +1,6 @@
+import { authAPI } from "../api/api"
+import { AppStateType } from "./redux-store"
+
 // ACTION TYPES
 const SET_AUTH_USER_DATA: 'SET_AUTH_USER_DATA' = 'SET_AUTH_USER_DATA'
 const TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING' = 'TOGGLE_IS_FETCHING'
@@ -74,5 +77,20 @@ export const authReducer = (
 
     default:
       return state
+  }
+}
+
+// THUNK CREATOR
+export const getAuthUserData = () => {
+  return (dispatch: (action: ActionType) => AppStateType) => {
+    dispatch(toggleIsFetching(true))
+    authAPI.me()
+      .then(response => {
+        if (response.data.resultCode === 0) {
+          dispatch(toggleIsFetching(false))
+          let { id, email, login } = response.data.data
+          dispatch(setAuthUserData(id, email, login))
+        }
+      })
   }
 }

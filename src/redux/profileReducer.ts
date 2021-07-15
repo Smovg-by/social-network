@@ -1,3 +1,6 @@
+import { userAPI } from "../api/api"
+import { AppStateType } from "./redux-store"
+
 export const ADD_POST: 'ADD_POST' = 'ADD_POST'
 export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
 export const SET_USER_PROFILE: 'SET_USER_PROFILE' = 'SET_USER_PROFILE'
@@ -106,5 +109,15 @@ export const profileReducer = (
     }
     default:
       return state
+  }
+}
+
+// THUNK CREATOR
+export const getProfile = (userId: string) => {
+  return (dispatch: (action: ActionType) => AppStateType) => {
+    userAPI.getProfileInfo(userId)
+      .then(response => {
+        dispatch(setUserProfile(response.data))
+      })
   }
 }

@@ -186,8 +186,8 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
     })
   }
 }
-
-export const unFollowThunkCreator = (userId: number) => {
+// THUNK CREATORS
+export const unfollow = (userId: number) => {
   return (dispatch: (action: ActionType) => AppStateType) => {
     dispatch(toggleIsFollowingProgress(userId, true))
     userAPI.unFollowUsers(userId)
@@ -202,7 +202,7 @@ export const unFollowThunkCreator = (userId: number) => {
   }
 }
 
-export const followThunkCreator = (userId: number) => {
+export const follow = (userId: number) => {
   return (dispatch: (action: ActionType) => AppStateType) => {
     dispatch(toggleIsFollowingProgress(userId, true))
     userAPI.followUsers(userId)

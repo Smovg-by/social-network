@@ -12,8 +12,8 @@ type UsersPropsType = {
   users: Array<UserType>
   followingInProgress: Array<number>
   onPageChanged: (page: number) => void
-  unFollowThunkCreator: (userId: number) => void
-  followThunkCreator: (userId: number) => void
+  unfollow: (userId: number) => void
+  follow: (userId: number) => void
 }
 
 export let Users = (props: UsersPropsType) => {
@@ -64,7 +64,7 @@ export let Users = (props: UsersPropsType) => {
                   <button
                     disabled={props.followingInProgress.some(id => id === u.id)}
                     onClick={() => {
-                      props.unFollowThunkCreator(u.id)
+                      props.unfollow(u.id)
                     }}
                   >
                     Unfollow
@@ -73,7 +73,7 @@ export let Users = (props: UsersPropsType) => {
                   <button
                     disabled={props.followingInProgress.some(id => id === u.id)}
                     onClick={() => {
-                      props.followThunkCreator(u.id)
+                      props.follow(u.id)
                     }}
                   >
                     Follow

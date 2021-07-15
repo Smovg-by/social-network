@@ -4,8 +4,8 @@ import {
   setCurrentPage,
   UserType,
   getUsersThunkCreator,
-  unFollowThunkCreator,
-  followThunkCreator,
+  unfollow,
+  follow,
 } from '../../redux/usersReducer'
 import React from 'react'
 import { Users } from './Users'
@@ -20,8 +20,8 @@ type UsersContainerPropsType = {
   followingInProgress: Array<number>
   setCurrentPage: (currentPage: number) => void
   getUsersThunkCreator: (currentPage: number, pageSize: number) => void
-  unFollowThunkCreator: (userId: number) => void
-  followThunkCreator: (userId: number) => void
+  unfollow: (userId: number) => void
+  follow: (userId: number) => void
 }
 class UsersContainer extends React.Component<UsersContainerPropsType> {
 
@@ -46,8 +46,8 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         users={this.props.users}
         isFetching={this.props.isFetching}
         followingInProgress={this.props.followingInProgress}
-        unFollowThunkCreator={this.props.unFollowThunkCreator}
-        followThunkCreator={this.props.followThunkCreator}
+        unfollow={this.props.unfollow}
+        follow={this.props.follow}
       />
     </>
   }
@@ -78,7 +78,7 @@ export default connect(
   {
     setCurrentPage,
     getUsersThunkCreator, // thunk
-    unFollowThunkCreator,// thunk
-    followThunkCreator,// thunk
+    unfollow,// thunk
+    follow,// thunk
   }
 )(UsersContainer)
