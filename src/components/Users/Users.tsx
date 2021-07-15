@@ -2,7 +2,7 @@ import { UserType } from '../../redux/usersReducer'
 import styles from './Users.module.css'
 import userPhoto from '../../assets/images/user_ico.jpg'
 import { NavLink } from 'react-router-dom'
-import { followUsers, unFollowUsers } from '../../api/api'
+
 
 type UsersPropsType = {
   totalUsersCount: number
@@ -11,10 +11,9 @@ type UsersPropsType = {
   isFetching: boolean
   users: Array<UserType>
   followingInProgress: Array<number>
-  follow: (id: number) => void
-  unfollow: (id: number) => void
   onPageChanged: (page: number) => void
-  toggleIsFollowingProgress: (id: number, isFetching: boolean) => void
+  unFollowThunkCreator: (userId: number) => void
+  followThunkCreator: (userId: number) => void
 }
 
 export let Users = (props: UsersPropsType) => {
@@ -31,7 +30,7 @@ export let Users = (props: UsersPropsType) => {
       <div>
         {pages.map(page => {
           return (
-            <span
+            <span key={page}
               onClick={() => {
                 props.onPageChanged(page)
               }}
@@ -65,17 +64,7 @@ export let Users = (props: UsersPropsType) => {
                   <button
                     disabled={props.followingInProgress.some(id => id === u.id)}
                     onClick={() => {
-                      props.toggleIsFollowingProgress(u.id, true)
-
-                      unFollowUsers(u.id)
-                        .then(response => {
-                          if (response.resultCode === 0) {
-                            props.unfollow(u.id)
-                          }
-                        })
-                        .finally(() => {
-                          props.toggleIsFollowingProgress(u.id, false)
-                        })
+                      props.unFollowThunkCreator(u.id)
                     }}
                   >
                     Unfollow
@@ -84,17 +73,7 @@ export let Users = (props: UsersPropsType) => {
                   <button
                     disabled={props.followingInProgress.some(id => id === u.id)}
                     onClick={() => {
-                      props.toggleIsFollowingProgress(u.id, true)
-
-                      followUsers(u.id)
-                        .then(response => {
-                          if (response.resultCode === 0) {
-                            props.follow(u.id)
-                          }
-                        })
-                        .finally(() => {
-                          props.toggleIsFollowingProgress(u.id, false)
-                        })
+                      props.followThunkCreator(u.id)
                     }}
                   >
                     Follow
@@ -104,13 +83,11 @@ export let Users = (props: UsersPropsType) => {
             </span>
             <span>
               <span>
-                <div>{u.name}</div>
-                <div>{u.status}</div>
+                <div>{`NAME: ${u.name}`}</div>
+                <div>{`STATUS: ${u.status}`}</div>
+                <div>{`ID: ${u.id}`}</div>
               </span>
-              <span>
-                <div>{'u.location.country'}</div>
-                <div>{'u.location.city'}</div>
-              </span>
+              <hr />
             </span>
           </div>
         )

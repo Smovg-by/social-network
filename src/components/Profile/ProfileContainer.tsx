@@ -4,7 +4,8 @@ import { Profile } from './Profile'
 import { ProfileInfoType, setUserProfile } from '../../redux/profileReducer'
 import { RootStateType } from '../../redux/redux-store'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { getProfileInfo } from '../../api/api'
+import { userAPI } from '../../api/api'
+
 
 type withRouterParamsType = {
   userId: string
@@ -24,7 +25,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
     if (!userId) { userId = '2' } // сделаем USER по умолчанию, если других нет
 
-    getProfileInfo(userId)
+    userAPI.getProfileInfo(userId)
       .then(response => {
         this.props.setUserProfile(response.data)
       })

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { UserType } from '../redux/usersReducer'
 
 const instance = axios.create({
   withCredentials: true,
@@ -6,20 +7,68 @@ const instance = axios.create({
   headers: { 'API-KEY': 'd52e5e5f-6327-49fb-8ea2-f645f4b200f7' }
 })
 
-export const getUsers = (currentPage: number, pageSize: number) => {
-  return instance
-    .get(`users?page=${currentPage}&count=${pageSize}`)
-    .then(response => response.data)
+type userAPIType = {
+  getUsers: (currentPage: number, pageSize: number) => Promise<getUsersResponseType>
+  followUsers: (id: number) => Promise<followUsersResponseType>
+  unFollowUsers: (id: number) => Promise<unFollowUsersResponseType>
+  getProfileInfo: (userId: string) => Promise<getProfileInfoResponseType>
 }
 
-export const followUsers = (id: number) => {
-  return instance.post(`follow/${id}`).then(response => response.data)
+type getUsersResponseType = {
+  items: Array<UserType>
+  totalCount: number
+  error: string | null
+}
+type followUsersResponseType = {
+  resultCode: number
+  messages: string
+  data: any | null
+}
+type unFollowUsersResponseType = {
+  resultCode: number
+  messages: string
+  data: any | null
+}
+type getProfileInfoResponseType = {
+  data: {
+    aboutMe: string
+    contacts: {
+      facebook: string | null
+      github: string | null
+      instagram: string | null
+      mainLink: string | null
+      twitter: string | null
+      vk: string | null
+      website: string | null
+      youtube: string | null
+    }
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    photos: {
+      small: string
+      large: string
+    }
+    userId: number
+  }
 }
 
-export const unFollowUsers = (id: number) => {
-  return instance.delete(`follow/${id}`).then(response => response.data)
-}
+export const userAPI: userAPIType = {
+  getUsers(currentPage: number, pageSize: number) {
+    return instance
+      .get(`users?page=${currentPage}&count=${pageSize}`)
+      .then(response => response.data)
+  },
 
-export const getProfileInfo = (userId: string) => {
-  return instance.get(`profile/` + userId)
+  followUsers(id: number) {
+    return instance.post(`follow/${id}`).then(response => response.data)
+  },
+
+  unFollowUsers(id: number) {
+    return instance.delete(`follow/${id}`).then(response => response.data)
+  },
+
+  getProfileInfo(userId: string) {
+    return instance.get(`profile/` + userId)
+  }
 }
