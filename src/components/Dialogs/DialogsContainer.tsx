@@ -17,13 +17,15 @@ export type MessageType = {
 
 type MapStatePropsType = {
   dialogsPage: dialogsPageType
+  isAuth: boolean
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     // отправляем данные из СТЕЙТА
     // Dilogs перерисуется, если мы изменим это поле
-    dialogsPage: state.dialogsPage
+    dialogsPage: state.dialogsPage,
+    isAuth: state.auth.isAuth
   }
 }
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {

@@ -1,4 +1,5 @@
 
+import { Redirect } from 'react-router-dom'
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
@@ -7,6 +8,7 @@ type DialogsComponentDataType = {
   UpdateNewMessageBody: (newText: string) => void
   SendMessage: (newText: string) => void
   dialogsPage: dialogsPageType
+  isAuth: boolean
 }
 
 export type Dialog = {
@@ -45,6 +47,8 @@ export function Dialogs(props: DialogsComponentDataType) {
       props.SendMessage(newText)
     }
   }
+
+  if (!props.isAuth) return <Redirect to={'/login'} />
 
   return (
     <div className={classes.dialogs}>
