@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import {
   ActionType,
   dialogsPageType,
@@ -22,12 +23,11 @@ type MapStatePropsType = {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    // отправляем данные из СТЕЙТА
-    // Dilogs перерисуется, если мы изменим это поле
     dialogsPage: state.dialogsPage,
     isAuth: state.auth.isAuth
   }
 }
+
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
   // колл-беки, которые будем отправлять в презентационую компоненту
   return {
@@ -40,7 +40,7 @@ let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
   }
 }
 
-export const DialogsContainer = connect(
+export const DialogsContainer = withAuthRedirect(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dialogs)
+)(Dialogs))

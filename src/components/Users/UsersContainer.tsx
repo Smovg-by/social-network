@@ -10,6 +10,7 @@ import {
 import React from 'react'
 import { Users } from './Users'
 import Preloader from '../Common/Preloader/Preloader'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 
 type UsersContainerPropsType = {
   users: Array<UserType>
@@ -73,6 +74,9 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   }
 }
 
+// создадим контейнерную компоненту
+let AuthRedirectComponent = withAuthRedirect(UsersContainer)
+
 export default connect(
   mapStateToProps,
   {
@@ -81,4 +85,4 @@ export default connect(
     unfollow,// thunk
     follow,// thunk
   }
-)(UsersContainer)
+)(AuthRedirectComponent)

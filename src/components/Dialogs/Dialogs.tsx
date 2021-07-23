@@ -48,7 +48,7 @@ export function Dialogs(props: DialogsComponentDataType) {
     }
   }
 
-  if (!props.isAuth) return <Redirect to={'/login'} />
+  // if (!props.isAuth) return <Redirect to={'/login'} />
 
   return (
     <div className={classes.dialogs}>

@@ -4,7 +4,7 @@ import { UserType } from '../redux/usersReducer'
 const instance = axios.create({
   withCredentials: true,
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-  headers: { 'API-KEY': 'd52e5e5f-6327-49fb-8ea2-f645f4b200f7' }
+  headers: { 'API-KEY': '529ae99f-10c2-4c69-896d-880d16566f14' }
 })
 
 type userAPIType = {
