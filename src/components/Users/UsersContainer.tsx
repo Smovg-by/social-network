@@ -7,10 +7,11 @@ import {
   unfollow,
   follow,
 } from '../../redux/usersReducer'
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { Users } from './Users'
 import Preloader from '../Common/Preloader/Preloader'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
 
 type UsersContainerPropsType = {
   users: Array<UserType>
@@ -75,14 +76,22 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 // создадим контейнерную компоненту
-let AuthRedirectComponent = withAuthRedirect(UsersContainer)
+// let AuthRedirectComponent = withAuthRedirect(UsersContainer)
 
-export default connect(
-  mapStateToProps,
-  {
-    setCurrentPage,
-    getUsersThunkCreator, // thunk
-    unfollow,// thunk
-    follow,// thunk
-  }
-)(AuthRedirectComponent)
+// export default connect(
+//   mapStateToProps,
+//   {
+//     setCurrentPage,
+//     getUsersThunkCreator,
+//     unfollow,
+//     follow,
+//   }
+// )(AuthRedirectComponent)
+
+export default compose<ComponentType>(connect(mapStateToProps, {
+  setCurrentPage,
+  getUsersThunkCreator,
+  unfollow,
+  follow,
+}
+), withAuthRedirect)(UsersContainer)

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { connect } from 'react-redux'
 import { ProfileInfoType, getProfile } from '../../redux/profileReducer'
 import { AppStateType } from '../../redux/redux-store'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { Profile } from './Profile'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
 
 
 type withRouterParamsType = {
@@ -51,6 +52,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 // создадим контейнерную компоненту
 
-let withUrlDataContainerComponent = withRouter(ProfileContainer)
+// let withUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default withAuthRedirect(connect(mapStateToProps, { getProfile })(withUrlDataContainerComponent))
+// export default withAuthRedirect(connect(mapStateToProps, { getProfile })(withUrlDataContainerComponent))
+
+export default compose<ComponentType>(connect(mapStateToProps, { getProfile }), withRouter, withAuthRedirect)(ProfileContainer)
