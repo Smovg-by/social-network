@@ -1,9 +1,10 @@
-import { userAPI } from "../api/api"
+import { profileAPI } from "../api/api"
 import { AppStateType } from "./redux-store"
 
 export const ADD_POST: 'ADD_POST' = 'ADD_POST'
 export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
 export const SET_USER_PROFILE: 'SET_USER_PROFILE' = 'SET_USER_PROFILE'
+export const SET_STATUS: 'SET_STATUS' = 'SET_STATUS'
 
 export const addPostAC = (text: string): AddPostActionType => {
   return { type: ADD_POST, postMessage: text }
@@ -20,6 +21,10 @@ export const setUserProfile = (profile: any): setUserProfileType => {
   return { type: SET_USER_PROFILE, profile }
 }
 
+export const setStatus = (status: string | null): setStatusType => {
+  return { type: SET_STATUS, status }
+}
+
 export type AddPostActionType = {
   type: 'ADD_POST'
   postMessage: string
@@ -32,11 +37,16 @@ export type setUserProfileType = {
   type: 'SET_USER_PROFILE'
   profile: any
 }
+export type setStatusType = {
+  type: 'SET_STATUS'
+  status: string | null
+}
 
 export type ActionType =
   | AddPostActionType
   | UpdatePostTextType
   | setUserProfileType
+  | setStatusType
 
 export type Posts = {
   id: number
@@ -74,6 +84,7 @@ export type InitialStateType = {
   newPostText: string
   posts: Array<Posts>
   profile: null | ProfileInfoType
+  status: string | null
 }
 
 let initialState = {
@@ -84,7 +95,8 @@ let initialState = {
     { id: 3, message: 'BlaBla', likesCount: 11 },
     { id: 4, message: 'Dada', likesCount: 11 }
   ],
-  profile: null
+  profile: null,
+  status: null,
 }
 
 export const profileReducer = (
@@ -107,6 +119,9 @@ export const profileReducer = (
     case SET_USER_PROFILE: {
       return { ...state, profile: action.profile }
     }
+    case SET_STATUS: {
+      return { ...state, status: action.status }
+    }
     default:
       return state
   }
@@ -115,9 +130,35 @@ export const profileReducer = (
 // THUNK CREATOR
 export const getProfile = (userId: string) => {
   return (dispatch: (action: ActionType) => AppStateType) => {
-    userAPI.getProfileInfo(userId)
+    profileAPI.getProfileInfo(userId)
       .then(response => {
+
         dispatch(setUserProfile(response.data))
+      })
+  }
+}
+
+export const getStatus = (userId: string) => {
+  return (dispatch: (action: ActionType) => AppStateType) => {
+    profileAPI.getStatus(userId)
+      .then(response => {
+        if (response) {
+          console.log(response);
+          dispatch(setStatus(response))
+        } else { dispatch(setStatus('no status')) }
+      })
+  }
+}
+
+export const updateStatus = (status: string) => {
+  return (dispatch: (action: ActionType) => AppStateType) => {
+    console.log('update status');
+    profileAPI.updateStatus(status)
+      .then(response => {
+        if (response.resultCode === 0) {
+          // dispatch(setStatus(response.data))
+          dispatch(setStatus(status))
+        }
       })
   }
 }

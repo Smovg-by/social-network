@@ -11,8 +11,17 @@ type userAPIType = {
   getUsers: (currentPage: number, pageSize: number) => Promise<getUsersResponseType>
   followUsers: (id: number) => Promise<followUsersResponseType>
   unFollowUsers: (id: number) => Promise<unFollowUsersResponseType>
+}
+type profileAPIType = {
   getProfileInfo: (userId: string) => Promise<getProfileInfoResponseType>
+  getStatus: (userId: string) => Promise<string | null>
+  updateStatus: (status: string) => Promise<updateStatusResponseType>
+}
 
+type updateStatusResponseType = {
+  resultCode: number
+  messages: Array<string>
+  data: {}
 }
 
 type authAPIType = {
@@ -57,28 +66,39 @@ type getProfileInfoResponseType = {
     userId: number
   }
 }
-
+//
+// userAPI
+//
 export const userAPI: userAPIType = {
   getUsers(currentPage: number, pageSize: number) {
     return instance
       .get(`users?page=${currentPage}&count=${pageSize}`)
       .then(response => response.data)
   },
-
   followUsers(id: number) {
     return instance.post(`follow/${id}`).then(response => response.data)
   },
-
   unFollowUsers(id: number) {
     return instance.delete(`follow/${id}`).then(response => response.data)
   },
-
+}
+//
+// profileAPI
+//
+export const profileAPI: profileAPIType = {
   getProfileInfo(userId: string) {
     return instance.get(`profile/` + userId)
   },
-
+  getStatus(userId: string) {
+    return instance.get(`profile/status/` + userId).then(response => response.data)
+  },
+  updateStatus(status: string) {
+    return instance.put(`profile/status/`, { status: status })
+  }
 }
-
+//
+// authAPI
+//
 export const authAPI: authAPIType = {
   me() {
     return instance.get(`auth/me`)
