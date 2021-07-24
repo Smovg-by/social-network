@@ -5,8 +5,8 @@ import { ProfileInfoType } from '../../redux/profileReducer'
 
 type ProfilePropsType = {
   profile: ProfileInfoType | null
-  status: string | null
-  updateStatus: (status: string | null) => void
+  status: string
+  updateStatus: (status: string) => void
 }
 
 export function Profile(props: ProfilePropsType) {

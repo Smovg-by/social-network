@@ -1,14 +1,19 @@
 import React, { ChangeEvent, FocusEvent } from 'react'
 import classes from './ProfileInfo.module.css'
 
-type PrfileStatusPropsType = {
-  status: string | null
-  updateStatus: (status: string | null) => void
+type ProfileStatusPropsType = {
+  status: string
+  updateStatus: (status: string) => void
 }
 
-class ProfileStatus extends React.Component<PrfileStatusPropsType> {
+type ProfileStatusStateType = {
+  editMode: boolean
+  status: string
+}
 
-  state = {
+class ProfileStatus extends React.Component<ProfileStatusPropsType> {
+
+  state: ProfileStatusStateType = {
     editMode: false,
     status: this.props.status,
   }
@@ -18,7 +23,7 @@ class ProfileStatus extends React.Component<PrfileStatusPropsType> {
       editMode: true
     })
   }
-  deactivateEditMode = () => { // если использовать стрелочнуюб можно не байндить
+  deactivateEditMode = () => { // если использовать стрелочную можно не байндить
     this.setState({
       editMode: false
     })
@@ -31,7 +36,16 @@ class ProfileStatus extends React.Component<PrfileStatusPropsType> {
   }
 
   onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ ...this.state, status: e.currentTarget.value })
+    this.setState({ status: e.currentTarget.value })
+  }
+
+  componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: ProfileStatusStateType): void {
+    if (prevProps.status !== this.props.status) { // обязательно задаем условие, т.к. иначе будет превышен call stack!!!
+      this.setState({
+        status: this.props.status
+      })
+    }
+
   }
 
   render() {
@@ -41,12 +55,21 @@ class ProfileStatus extends React.Component<PrfileStatusPropsType> {
         Status:
         {!this.state.editMode && (
           <div>
-            <span onDoubleClick={this.activateEditMode}>'{this.state.status || this.props.status}'</span>
+            <span onDoubleClick={this.activateEditMode}>
+              {/* '{this.props.status}' */}
+              '{this.state.status || 'no status'}'
+            </span>
           </div>
         )}
         {this.state.editMode && (
           <div>
-            <input onChange={this.onStatusChange} value={this.state.status || this.props.status + ''} autoFocus onBlur={this.deactivateEditMode} onFocus={this.handleFocus} />
+            <input
+              onChange={this.onStatusChange}
+              // value={this.state.status || this.props.status + ''}
+              value={this.state.status}
+              autoFocus
+              onBlur={this.deactivateEditMode}
+              onFocus={this.handleFocus} />
           </div>
         )}
       </div>

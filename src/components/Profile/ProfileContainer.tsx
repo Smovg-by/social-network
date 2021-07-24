@@ -15,15 +15,15 @@ type withRouterParamsType = {
 type ProfileContainerPropsType = {
   profile: ProfileInfoType | null
   isAuth: boolean
-  status: string | null
+  status: string
   getProfile: (userId: string) => void
   getStatus: (userId: string) => void
-  updateStatus: (status: string | null) => void
+  updateStatus: (status: string) => void
 }
 
 type MapStateToPropsType = {
   profile: ProfileInfoType | null
-  status: string | null
+  status: string
 }
 
 type CommonPropsType = RouteComponentProps<withRouterParamsType> & ProfileContainerPropsType

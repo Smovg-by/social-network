@@ -92,7 +92,7 @@ export type UserType = {
   id: number
   uniqueUrlName: string | null
   photos: UserPhotosType
-  status: string | null
+  status: string
   followed: boolean
 }
 

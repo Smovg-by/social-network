@@ -21,7 +21,7 @@ export const setUserProfile = (profile: any): setUserProfileType => {
   return { type: SET_USER_PROFILE, profile }
 }
 
-export const setStatus = (status: string | null): setStatusType => {
+export const setStatus = (status: string): setStatusType => {
   return { type: SET_STATUS, status }
 }
 
@@ -39,7 +39,7 @@ export type setUserProfileType = {
 }
 export type setStatusType = {
   type: 'SET_STATUS'
-  status: string | null
+  status: string
 }
 
 export type ActionType =
@@ -84,7 +84,7 @@ export type InitialStateType = {
   newPostText: string
   posts: Array<Posts>
   profile: null | ProfileInfoType
-  status: string | null
+  status: string
 }
 
 let initialState = {
@@ -96,7 +96,7 @@ let initialState = {
     { id: 4, message: 'Dada', likesCount: 11 }
   ],
   profile: null,
-  status: null,
+  status: '',
 }
 
 export const profileReducer = (
@@ -143,7 +143,6 @@ export const getStatus = (userId: string) => {
     profileAPI.getStatus(userId)
       .then(response => {
         if (response) {
-          console.log(response);
           dispatch(setStatus(response))
         } else { dispatch(setStatus('no status')) }
       })
@@ -152,7 +151,6 @@ export const getStatus = (userId: string) => {
 
 export const updateStatus = (status: string) => {
   return (dispatch: (action: ActionType) => AppStateType) => {
-    console.log('update status');
     profileAPI.updateStatus(status)
       .then(response => {
         if (response.resultCode === 0) {
