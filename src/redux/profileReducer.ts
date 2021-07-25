@@ -144,7 +144,7 @@ export const getStatus = (userId: string) => {
       .then(response => {
         if (response) {
           dispatch(setStatus(response))
-        } else { dispatch(setStatus('no status')) }
+        }
       })
   }
 }
