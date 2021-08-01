@@ -2,19 +2,11 @@ import { profileAPI } from "../api/api"
 import { AppStateType } from "./redux-store"
 
 export const ADD_POST: 'ADD_POST' = 'ADD_POST'
-export const UPDATE_POST_TEXT: 'UPDATE_POST_TEXT' = 'UPDATE_POST_TEXT'
 export const SET_USER_PROFILE: 'SET_USER_PROFILE' = 'SET_USER_PROFILE'
 export const SET_STATUS: 'SET_STATUS' = 'SET_STATUS'
 
 export const addPostAC = (text: string): AddPostActionType => {
   return { type: ADD_POST, postMessage: text }
-}
-
-export const updatePostTextAC = (newText: string): UpdatePostTextType => {
-  return {
-    type: UPDATE_POST_TEXT,
-    newText: newText
-  }
 }
 
 export const setUserProfile = (profile: any): setUserProfileType => {
@@ -29,10 +21,7 @@ export type AddPostActionType = {
   type: 'ADD_POST'
   postMessage: string
 }
-export type UpdatePostTextType = {
-  type: 'UPDATE_POST_TEXT'
-  newText: string
-}
+
 export type setUserProfileType = {
   type: 'SET_USER_PROFILE'
   profile: any
@@ -44,7 +33,6 @@ export type setStatusType = {
 
 export type ActionType =
   | AddPostActionType
-  | UpdatePostTextType
   | setUserProfileType
   | setStatusType
 
@@ -113,9 +101,7 @@ export const profileReducer = (
 
       return { ...state, posts: [newPost, ...state.posts], newPostText: '' }
     }
-    case UPDATE_POST_TEXT: {
-      return { ...state, newPostText: action.newText }
-    }
+
     case SET_USER_PROFILE: {
       return { ...state, profile: action.profile }
     }

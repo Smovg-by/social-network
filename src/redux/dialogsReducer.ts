@@ -1,15 +1,4 @@
-export const UPDATE_NEW_MESSAGE_BODY: 'UPDATE_NEW_MESSAGE_BODY' =
-  'UPDATE_NEW_MESSAGE_BODY'
 export const SEND_MESSAGE: 'SEND_MESSAGE' = 'SEND_MESSAGE'
-
-export const UpdateNewMessageBodyAC = (
-  text: string
-): UpdateNewMessageBodyActionType => {
-  return {
-    type: 'UPDATE_NEW_MESSAGE_BODY',
-    body: text
-  }
-}
 
 export const SendMessageAC = (text: string): SendMessageActionType => {
   return {
@@ -34,16 +23,12 @@ export type dialogsPageType = {
   newMessageBody: string
 }
 
-export type UpdateNewMessageBodyActionType = {
-  type: 'UPDATE_NEW_MESSAGE_BODY'
-  body: string
-}
 export type SendMessageActionType = {
   type: 'SEND_MESSAGE'
   body: string
 }
 
-export type ActionType = UpdateNewMessageBodyActionType | SendMessageActionType
+export type ActionType = SendMessageActionType
 // вместо прописывания типизации вручную можно взять ее из объекта
 type InitialStateType = typeof initialState
 
@@ -80,15 +65,12 @@ export const dialogsReducer = (
   action: ActionType
 ): InitialStateType => {
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_BODY:
-      return { ...state, newMessageBody: action.body }
 
     case SEND_MESSAGE:
-      let body = state.newMessageBody
+      // let body = state.newMessageBody
       return {
         ...state,
-        newMessageBody: '',
-        messages: [...state.messages, { id: 6, message: body }]
+        messages: [...state.messages, { id: 6, message: action.body }]
       }
 
     default:

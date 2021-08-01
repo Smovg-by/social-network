@@ -26,6 +26,8 @@ type updateStatusResponseType = {
 
 type authAPIType = {
   me: () => Promise<any>
+  logIn: (email: string, password: string, rememberMe: boolean) => Promise<any>
+  logOut: () => Promise<any>
 }
 
 type getUsersResponseType = {
@@ -102,5 +104,13 @@ export const profileAPI: profileAPIType = {
 export const authAPI: authAPIType = {
   me() {
     return instance.get(`auth/me`)
+  },
+
+  logIn(email: string, password: string, rememberMe: boolean) {
+    return instance.post(`auth/login`, { email, password, rememberMe })
+  },
+
+  logOut() {
+    return instance.delete(`auth/login`)
   },
 }

@@ -6,7 +6,7 @@ import {
   ActionType,
   dialogsPageType,
   SendMessageAC,
-  UpdateNewMessageBodyAC
+
 } from '../../redux/dialogsReducer'
 import {
   AppStateType
@@ -33,9 +33,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
   // колл-беки, которые будем отправлять в презентационую компоненту
   return {
-    UpdateNewMessageBody: (newText: string) => {
-      dispatch(UpdateNewMessageBodyAC(newText))
-    },
     SendMessage: (newText: string) => {
       dispatch(SendMessageAC(newText))
     }

@@ -1,5 +1,7 @@
 
+import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
@@ -31,7 +33,38 @@ export type MessageType = {
   message: string
 }
 
+type FormDataType = {
+  newMessageBody: string
+}
+//
+// -----MyPostsForm component start
+//
+const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <Field placeholder={'Type here a message...'} name={'newMessageBody'} component={'textarea'} />
+      <div><button>Send message</button></div>
+    </form>
+  )
+}
+
+const AddMessageReduxForm = reduxForm<FormDataType>({
+  form: 'messageData'
+})(AddMessageForm)
+
+//
+// -----Dialogs component start
+//
 export function Dialogs(props: DialogsComponentDataType) {
+
+  let dispatch = useDispatch()
+
+  const onSubmit = (formData: FormDataType) => {
+    console.log(formData);
+    props.SendMessage(formData.newMessageBody)
+    dispatch(reset('messageData'))
+  }
+
   let dialogsElements = props.dialogsPage.dialogs.map((item, i) => {
     return <DialogItem key={i} id={item.id} name={item.name} />
   })
@@ -39,14 +72,14 @@ export function Dialogs(props: DialogsComponentDataType) {
   let messagesElements = props.dialogsPage.messages.map((item, i) => {
     return <Message key={i} message={item.message} />
   })
-  let newMessageBody = props.dialogsPage.newMessageBody
+  // let newMessageBody = props.dialogsPage.newMessageBody
 
-  let onSendMessageClick = () => {
-    let newText = props.dialogsPage.newMessageBody //? значит, что в этом поле может быть Null
-    if (newText) {
-      props.SendMessage(newText)
-    }
-  }
+  // let onSendMessageClick = () => {
+  //   let newText = props.dialogsPage.newMessageBody //? значит, что в этом поле может быть Null
+  //   if (newText) {
+  //     props.SendMessage(newText)
+  //   }
+  // }
 
   // if (!props.isAuth) return <Redirect to={'/login'} />
 
@@ -56,7 +89,8 @@ export function Dialogs(props: DialogsComponentDataType) {
       <div className={classes.messages}>
         <div> {messagesElements} </div>
         <div>
-          <div>
+          <AddMessageReduxForm onSubmit={onSubmit} />
+          {/* <div>
             <textarea
               onChange={e => {
                 let newText = e.currentTarget.value
@@ -68,7 +102,7 @@ export function Dialogs(props: DialogsComponentDataType) {
           </div>
           <div>
             <button onClick={onSendMessageClick}>Send</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
