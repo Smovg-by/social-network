@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { AppStateType } from '../../redux/redux-store'
 import { Header } from './Header'
-import { toggleIsFetching, getAuthUserData } from '../../redux/authReducer'
+import { toggleIsFetching, getAuthUserData, logoutTC } from '../../redux/authReducer'
 import Preloader from '../Common/Preloader/Preloader'
 
 type HeaderContainerPropsType = {
@@ -12,6 +12,7 @@ type HeaderContainerPropsType = {
   isFetching: boolean
   toggleIsFetching: (isFetching: boolean) => void
   getAuthUserData: () => void
+  logoutTC: any
 }
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
@@ -24,7 +25,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     return (
       <>
         {this.props.isFetching ? <Preloader /> : null}
-        <Header isAuth={this.props.isAuth} login={this.props.login} />
+        <Header isAuth={this.props.isAuth} login={this.props.login} logoutTC={this.props.logoutTC} />
       </>
     )
   }
@@ -47,4 +48,5 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export default connect(mapStateToProps, {
   toggleIsFetching,
   getAuthUserData,
+  logoutTC,
 })(HeaderContainer)

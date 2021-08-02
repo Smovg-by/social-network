@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
+import { maxLength10, required } from '../../../utils/validators/validators'
+import { SuperInput } from '../../Common/FormsControls/FormsControls'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
@@ -21,11 +23,19 @@ type FormDataType = {
 //
 // -----AddNewPostForm component start
 //
-const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = props => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field placeholder={'Type here a post...'} name={'postText'} component={'textarea'} />
-      <div><button>Add post</button></div>
+      <Field
+        element={'textarea'}
+        placeholder={'Type here a post...'}
+        name={'postText'}
+        component={SuperInput}
+        validate={[required, maxLength10]}
+      />
+      <div>
+        <button>Add post</button>
+      </div>
     </form>
   )
 }
@@ -37,11 +47,10 @@ const PostMessageReduxForm = reduxForm<FormDataType>({
 // -----MyPosts component start
 //
 export function MyPosts(props: MyPostsPropsType) {
-
   let dispatch = useDispatch()
 
   const onSubmit = (formData: FormDataType) => {
-    console.log(formData);
+    console.log(formData)
     props.addPost(formData.postText)
     dispatch(reset('ProfileAddNewForm'))
   }
