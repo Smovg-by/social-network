@@ -1,3 +1,4 @@
+import { stopSubmit } from 'redux-form'
 import { authAPI } from '../api/api'
 import { AppStateType } from './redux-store'
 
@@ -84,7 +85,6 @@ export const authReducer = (
 // THUNK CREATOR
 export const getAuthUserData = () => {
   return (dispatch: (action: ActionType) => AppStateType) => {
-
     dispatch(toggleIsFetching(true))
     authAPI.me().then(response => {
       if (response.data.resultCode === 0) {
@@ -101,6 +101,9 @@ export const loginTC = (login: string, password: string, rememberMe: any = false
     authAPI.logIn(login, password, rememberMe).then(response => {
       if (response.data.resultCode === 0) {
         dispatch(getAuthUserData())
+      } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'some error'
+        dispatch(stopSubmit('login', { _error: message }))
       }
     })
   }

@@ -6,6 +6,7 @@ import { loginTC, logoutTC } from '../../redux/authReducer'
 import { AppStateType } from '../../redux/redux-store'
 import { required } from '../../utils/validators/validators'
 import { SuperInput } from '../Common/FormsControls/FormsControls'
+import styles from '../Common/FormsControls/FormsControls.module.css'
 
 type FormDataType = {
   login: string
@@ -45,6 +46,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = props => {
         />{' '}
         remember me
       </div>
+      {props.error && <div className={styles.formSummaryError}>{props.error}</div>}
       <div>
         <button>Log in</button>
       </div>
@@ -61,7 +63,6 @@ const Login = (props: any) => {
     let { login, password, rememberMe } = formData
     props.loginTC(login, password, rememberMe)
   }
-
   if (props.isAuth) {
     return <Redirect to={'/profile'} />
   } else

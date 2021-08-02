@@ -14,6 +14,7 @@ type withRouterParamsType = {
 
 type ProfileContainerPropsType = {
   profile: ProfileInfoType | null
+  authorisedUserId: string
   isAuth: boolean
   status: string
   getProfile: (userId: string) => void
@@ -24,6 +25,8 @@ type ProfileContainerPropsType = {
 type MapStateToPropsType = {
   profile: ProfileInfoType | null
   status: string
+  authorisedUserId: string
+  isAuth: boolean
 }
 
 type CommonPropsType = RouteComponentProps<withRouterParamsType> & ProfileContainerPropsType
@@ -33,7 +36,7 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 
     let userId = this.props.match.params.userId
 
-    if (!userId) { userId = '17787' } // сделаем USER по умолчанию, если других нет
+    if (!userId) { userId = this.props.authorisedUserId } // сделаем USER по умолчанию, если других нет
 
     this.props.getProfile(userId) // THUNK
 
@@ -51,9 +54,14 @@ class ProfileContainer extends React.Component<CommonPropsType> {
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+
+  let userId = state.auth.id ? (state.auth.id).toString() : ''
+
   return {
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    authorisedUserId: userId,
+    isAuth: state.auth.isAuth,
   }
 }
 
