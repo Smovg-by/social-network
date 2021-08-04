@@ -11,7 +11,7 @@ type HeaderContainerPropsType = {
   isFetching: boolean
   toggleIsFetching: (isFetching: boolean) => void
   getAuthUserData: () => void
-  logoutTC: any
+  logoutTC: () => void
 }
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
@@ -20,7 +20,6 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
   }
 
   render() {
-
     return (
       <>
         {this.props.isFetching ? <Preloader /> : null}
