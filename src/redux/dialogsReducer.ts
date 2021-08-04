@@ -1,12 +1,13 @@
+// ACTION TYPES
 export const SEND_MESSAGE: 'SEND_MESSAGE' = 'SEND_MESSAGE'
-
+// ACTION CREATORS
 export const SendMessageAC = (text: string): SendMessageActionType => {
   return {
     type: 'SEND_MESSAGE',
     body: text
   }
 }
-
+// INITIAL STATE
 type DialogType = {
   id: number
   name: string
@@ -29,14 +30,7 @@ export type SendMessageActionType = {
 }
 
 export type ActionType = SendMessageActionType
-// вместо прописывания типизации вручную можно взять ее из объекта
 type InitialStateType = typeof initialState
-
-// type InitialStateType = {
-//   dialogs: Array<Dialog>
-//   messages: Array<Messages>
-//   newMessageBody: string
-// }
 
 const initialState = {
   dialogs: [
@@ -59,7 +53,7 @@ const initialState = {
   ] as Array<MessagesType>,
   newMessageBody: ''
 }
-
+// REDUCER
 export const dialogsReducer = (
   state: InitialStateType = initialState,
   action: ActionType
@@ -67,7 +61,6 @@ export const dialogsReducer = (
   switch (action.type) {
 
     case SEND_MESSAGE:
-      // let body = state.newMessageBody
       return {
         ...state,
         messages: [...state.messages, { id: 6, message: action.body }]
@@ -77,5 +70,3 @@ export const dialogsReducer = (
       return state
   }
 }
-
-export default dialogsReducer

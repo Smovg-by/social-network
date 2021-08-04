@@ -1,10 +1,13 @@
+// ACTION TYPES
+// ACTION CREATORS
+// INITIAL STATE
 type Friends = {
   id: number
   name: string
   avatar: string
 }
 
-type InitialStateType = Array<Friends>
+type InitialStateType = typeof initialState
 
 const initialState = [
   {
@@ -27,13 +30,14 @@ const initialState = [
   }
 ]
 
+// REDUCER
+
 export const sidebarReducer = (
   state: InitialStateType = initialState,
   action: any
 ): InitialStateType => {
   // code
-
   return state
 }
 
-export default sidebarReducer
+// THUNK CREATOR

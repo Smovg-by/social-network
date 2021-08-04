@@ -1,16 +1,15 @@
+import { ThunkAction } from 'redux-thunk';
 import { userAPI } from '../api/api';
 import { AppStateType } from './redux-store';
 
-
 // ACTION TYPES
-const FOLLOW: 'FOLLOW' = 'FOLLOW'
-const UNFOLLOW: 'UNFOLLOW' = 'UNFOLLOW'
-const SET_USERS: 'SET_USERS' = 'SET_USERS'
-const SET_CURRENT_PAGE: 'SET_CURRENT_PAGE' = 'SET_CURRENT_PAGE'
-const SET_TOTAL_USERS_COUNT: 'SET_TOTAL_USERS_COUNT' = 'SET_TOTAL_USERS_COUNT'
-const TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING' = 'TOGGLE_IS_FETCHING'
-const TOGGLE_IS_FOLLOWING_PROGRESS: 'TOGGLE_IS_FOLLOWING_PROGRESS' =
-  'TOGGLE_IS_FOLLOWING_PROGRESS'
+const FOLLOW = 'FOLLOW'
+const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type ActionType =
   | FollowType
@@ -22,34 +21,36 @@ export type ActionType =
   | SetToggleIsFollowingProgressType
 
 type FollowType = {
-  type: 'FOLLOW'
+  type: typeof FOLLOW
   userId: number
 }
 type UnFollowType = {
-  type: 'UNFOLLOW'
+  type: typeof UNFOLLOW
   userId: number
 }
 type SetUsersType = {
-  type: 'SET_USERS'
+  type: typeof SET_USERS
   users: Array<UserType>
 }
 type SetCurrentPageType = {
-  type: 'SET_CURRENT_PAGE'
+  type: typeof SET_CURRENT_PAGE
   currentPage: number
 }
 type SetTotalUsersCountType = {
-  type: 'SET_TOTAL_USERS_COUNT'
+  type: typeof SET_TOTAL_USERS_COUNT
   totalCount: number
 }
 type SetToggleIsFetchingType = {
-  type: 'TOGGLE_IS_FETCHING'
+  type: typeof TOGGLE_IS_FETCHING
   isFetching: boolean
 }
 type SetToggleIsFollowingProgressType = {
-  type: 'TOGGLE_IS_FOLLOWING_PROGRESS'
+  type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
   id: number
   isFetching: boolean
 }
+
+// ACTION CREATORS
 
 export const followSuccess = (userId: number): FollowType => {
   return { type: FOLLOW, userId: userId }
@@ -96,22 +97,15 @@ export type UserType = {
   followed: boolean
 }
 
-type InitialStateType = {
-  users: Array<UserType>
-  pageSize: number
-  totalUsersCount: number
-  currentPage: number
-  isFetching: boolean
-  followingInProgress: Array<number>
-}
+type InitialStateType = typeof initialState
 
-let initialState: InitialStateType = {
-  users: [],
+let initialState = {
+  users: [] as Array<UserType>,
   pageSize: 20,
   totalUsersCount: 0,
   currentPage: 5,
   isFetching: false,
-  followingInProgress: []
+  followingInProgress: [] as Array<number>
 }
 
 // REDUCER
@@ -120,15 +114,14 @@ export const usersReducer = (
   action: ActionType
 ): InitialStateType => {
   switch (action.type) {
+
     case FOLLOW:
       return {
         ...state,
         users: state.users.map(u => {
           if (u.id === action.userId) {
-            // чтобы сэкономить память, будем менять только того юзера, но не самого, а его копию, у которого совпадает id.
             return { ...u, followed: true }
           }
-          // если id не совпадает, возвращаем сам объект, не копируем
           return u
         })
       }
@@ -138,16 +131,13 @@ export const usersReducer = (
         ...state,
         users: state.users.map(u => {
           if (u.id === action.userId) {
-            // чтобы сэкономить память, будем менять только того юзера, но не самого, а его копию, у которого совпадает id.
             return { ...u, followed: false }
           }
-          // если id не совпадает, возвращаем сам объект, не копируем
           return u
         })
       }
 
     case SET_USERS:
-      // массив пользователей будем получать от сервера. Склеиваем два массива, которые были и которые пришли
       return { ...state, users: action.users }
 
     case SET_CURRENT_PAGE:
@@ -166,6 +156,7 @@ export const usersReducer = (
           ? [...state.followingInProgress, action.id]
           : state.followingInProgress.filter(id => id !== action.id)
       }
+
     default:
       return state
   }
@@ -173,22 +164,21 @@ export const usersReducer = (
 
 // THUNK CREATOR
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-  return (dispatch: (action: ActionType) => AppStateType) => {
+type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType>
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType => {
+  return (dispatch) => {
     dispatch(toggleIsFetching(true))
-
     userAPI.getUsers(currentPage, pageSize).then(response => {
-
       dispatch(toggleIsFetching(false))
       dispatch(setUsers(response.items))
       dispatch(setTotalUsersCount(response.totalCount))
-
     })
   }
 }
-// THUNK CREATORS
-export const unfollow = (userId: number) => {
-  return (dispatch: (action: ActionType) => AppStateType) => {
+
+export const unfollow = (userId: number): ThunkType => {
+  return (dispatch) => {
     dispatch(toggleIsFollowingProgress(userId, true))
     userAPI.unFollowUsers(userId)
       .then(response => {
@@ -202,8 +192,8 @@ export const unfollow = (userId: number) => {
   }
 }
 
-export const follow = (userId: number) => {
-  return (dispatch: (action: ActionType) => AppStateType) => {
+export const follow = (userId: number): ThunkType => {
+  return (dispatch) => {
     dispatch(toggleIsFollowingProgress(userId, true))
     userAPI.followUsers(userId)
       .then(response => {

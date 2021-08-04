@@ -1,15 +1,16 @@
-import { stopSubmit } from 'redux-form'
-import { authAPI } from '../api/api'
 import { AppStateType } from './redux-store'
+import { FormAction, stopSubmit } from 'redux-form'
+import { ThunkAction } from 'redux-thunk'
+import { authAPI } from '../api/api'
 
 // ACTION TYPES
-const SET_AUTH_USER_DATA: 'SET_AUTH_USER_DATA' = 'SET_AUTH_USER_DATA'
-const TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING' = 'TOGGLE_IS_FETCHING'
+const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 export type ActionType = SetAuthUserDataType | SetToggleIsFetchingType
 
 type SetAuthUserDataType = {
-  type: 'SET_AUTH_USER_DATA'
+  type: typeof SET_AUTH_USER_DATA
   data: userAuthDataType
 }
 
@@ -21,7 +22,7 @@ type userAuthDataType = {
 }
 
 type SetToggleIsFetchingType = {
-  type: 'TOGGLE_IS_FETCHING'
+  type: typeof TOGGLE_IS_FETCHING
   isFetching: boolean
 }
 
@@ -31,7 +32,7 @@ export const setAuthUserData = (
   id: number,
   email: string,
   login: string,
-  isAuth: boolean,
+  isAuth: boolean
 ): SetAuthUserDataType => {
   return { type: SET_AUTH_USER_DATA, data: { id, email, login, isAuth } }
 }
@@ -44,18 +45,12 @@ export const toggleIsFetching = (
 
 // INITIAL STATE
 
-type InitialStateType = {
-  id: number | null
-  email: string | null
-  login: string | null
-  isAuth: boolean
-  isFetching: boolean
-}
+type InitialStateType = typeof initialState
 
-let initialState: InitialStateType = {
-  id: null,
-  email: null,
-  login: null,
+let initialState = {
+  id: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
   isAuth: false,
   isFetching: false
 }
@@ -83,39 +78,49 @@ export const authReducer = (
 }
 
 // THUNK CREATOR
-export const getAuthUserData = () => {
-  return (dispatch: (action: ActionType) => AppStateType) => {
-    dispatch(toggleIsFetching(true))
-    authAPI.me().then(response => {
-      if (response.data.resultCode === 0) {
-        dispatch(toggleIsFetching(false))
-        let { id, email, login } = response.data.data
-        dispatch(setAuthUserData(id, email, login, true))
-      }
-    })
+
+type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType | FormAction>
+
+export const getAuthUserData = (): ThunkType => async dispatch => {
+  dispatch(toggleIsFetching(true))
+  try {
+    const res = await authAPI.me()
+    if (res.data.resultCode === 0) {
+      dispatch(toggleIsFetching(false))
+      let { id, email, login } = res.data.data
+      dispatch(setAuthUserData(id, email, login, true))
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
-export const loginTC = (login: string, password: string, rememberMe: any = false) => {
-  return (dispatch: any) => {
-    authAPI.logIn(login, password, rememberMe).then(response => {
-      if (response.data.resultCode === 0) {
-        dispatch(getAuthUserData())
-      } else {
-        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'some error'
-        dispatch(stopSubmit('login', { _error: message }))
-      }
-    })
+export const loginTC = (
+  login: string,
+  password: string,
+  rememberMe: boolean = false
+): ThunkType => async dispatch => {
+  try {
+    const res = await authAPI.logIn(login, password, rememberMe)
+    if (res.data.resultCode === 0) {
+      dispatch(getAuthUserData())
+    } else {
+      let message =
+        res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
+      dispatch(stopSubmit('login', { _error: message }))
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
-export const logoutTC = () => {
-  return (dispatch: any) => {
-    authAPI.logOut().then(response => {
-      if (response.data.resultCode === 0) {
-        // let { id, email, login } = response.data.data
-        dispatch(setAuthUserData(0, '', '', false))
-      }
-    })
+export const logoutTC = (): ThunkType => async dispatch => {
+  try {
+    const res = await authAPI.logOut()
+    if (res.data.resultCode === 0) {
+      dispatch(setAuthUserData(0, '', '', false))
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
