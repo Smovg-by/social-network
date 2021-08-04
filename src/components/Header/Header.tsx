@@ -4,7 +4,7 @@ import classes from './Header.module.css'
 type HeaderPropsType = {
   login: string | null
   isAuth: boolean
-  logoutTC: any
+  logoutTC: () => void
 }
 
 export function Header(props: HeaderPropsType) {

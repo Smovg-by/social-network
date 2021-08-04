@@ -79,7 +79,7 @@ export const authReducer = (
 
 // THUNK CREATOR
 
-type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType | FormAction>
+export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType | FormAction>
 
 export const getAuthUserData = (): ThunkType => async dispatch => {
   dispatch(toggleIsFetching(true))

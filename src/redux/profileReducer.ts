@@ -14,7 +14,7 @@ export const addPostAC = (text: string): AddPostActionType => {
   return { type: ADD_POST, postMessage: text }
 }
 
-export const setUserProfile = (profile: any): setUserProfileType => {
+export const setUserProfile = (profile: ProfileInfoType | null): setUserProfileType => {
   return { type: SET_USER_PROFILE, profile }
 }
 
@@ -29,7 +29,7 @@ export type AddPostActionType = {
 
 export type setUserProfileType = {
   type: typeof SET_USER_PROFILE
-  profile: any
+  profile: ProfileInfoType | null
 }
 export type setStatusType = {
   type: typeof SET_STATUS

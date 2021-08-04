@@ -2,7 +2,7 @@ import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
-import { loginTC, logoutTC } from '../../redux/authReducer'
+import { loginTC, logoutTC, ThunkType } from '../../redux/authReducer'
 import { AppStateType } from '../../redux/redux-store'
 import { required } from '../../utils/validators/validators'
 import { SuperInput } from '../Common/FormsControls/FormsControls'
@@ -58,7 +58,13 @@ const LoginReduxForm = reduxForm<FormDataType>({
   form: 'login'
 })(LoginForm)
 
-const Login = (props: any) => {
+type LoginPropsType = {
+  isAuth: boolean
+  loginTC: (login: string, password: string, rememberMe: boolean) => void
+  logoutTC: () => void
+}
+
+const Login = (props: LoginPropsType) => {
   const onSubmit = (formData: FormDataType) => {
     let { login, password, rememberMe } = formData
     props.loginTC(login, password, rememberMe)

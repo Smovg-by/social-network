@@ -6,7 +6,6 @@ import { toggleIsFetching, getAuthUserData, logoutTC } from '../../redux/authRed
 import Preloader from '../Common/Preloader/Preloader'
 
 type HeaderContainerPropsType = {
-
   login: string | null
   isAuth: boolean
   isFetching: boolean
