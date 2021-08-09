@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
 import { maxLength10, required } from '../../../utils/validators/validators'
-import { SuperInput } from '../../Common/FormsControls/FormsControls'
+import { FormsControl } from '../../Common/FormsControls/FormsControls'
 import classes from './MyPosts.module.css'
 import { Post } from './Posts/Post'
 
@@ -30,7 +30,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = props => {
         element={'textarea'}
         placeholder={'Type here a post...'}
         name={'postText'}
-        component={SuperInput}
+        component={FormsControl}
         validate={[required, maxLength10]}
       />
       <div>

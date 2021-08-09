@@ -82,11 +82,11 @@ export const authReducer = (
 export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, ActionType | FormAction>
 
 export const getAuthUserData = (): ThunkType => async dispatch => {
-  dispatch(toggleIsFetching(true))
+  // dispatch(toggleIsFetching(true))
   try {
     const res = await authAPI.me()
     if (res.data.resultCode === 0) {
-      dispatch(toggleIsFetching(false))
+      // dispatch(toggleIsFetching(false))
       let { id, email, login } = res.data.data
       dispatch(setAuthUserData(id, email, login, true))
     }

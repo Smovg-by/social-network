@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Field, InjectedFormProps, reduxForm, reset } from 'redux-form'
 import { maxLength20, required } from '../../utils/validators/validators'
-import { SuperInput } from '../Common/FormsControls/FormsControls'
+import { FormsControl } from '../Common/FormsControls/FormsControls'
 import { DialogItem } from './DialogItem/DialogItem'
 import classes from './Dialogs.module.css'
 import { Message } from './Message/Message'
@@ -44,7 +44,7 @@ type FormDataType = {
 const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field element={'textarea'} placeholder={'Type here a message...'} name={'newMessageBody'} component={SuperInput} validate={[required, maxLength20]} />
+      <Field element={'textarea'} placeholder={'Type here a message...'} name={'newMessageBody'} component={FormsControl} validate={[required, maxLength20]} />
       <div><button>Send message</button></div>
     </form>
   )

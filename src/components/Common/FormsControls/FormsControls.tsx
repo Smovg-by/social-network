@@ -7,7 +7,7 @@ type superInputOwnPropsType = {
   placeholder: 'Login' | 'Password' | 'rememberMe'
 }
 
-export const SuperInput = ({
+export const FormsControl = ({
   element,
   type,
   input,

@@ -5,7 +5,7 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { loginTC, logoutTC, } from '../../redux/authReducer'
 import { AppStateType } from '../../redux/redux-store'
 import { required } from '../../utils/validators/validators'
-import { SuperInput } from '../Common/FormsControls/FormsControls'
+import { FormsControl } from '../Common/FormsControls/FormsControls'
 import styles from '../Common/FormsControls/FormsControls.module.css'
 
 type FormDataType = {
@@ -24,7 +24,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = props => {
           placeholder={'Login'}
           name={'login'}
           validate={[required]}
-          component={SuperInput}
+          component={FormsControl}
         />
       </div>
       <div>
@@ -34,7 +34,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = props => {
           placeholder={'Password'}
           name={'password'}
           validate={[required]}
-          component={SuperInput}
+          component={FormsControl}
         />
       </div>
       <div>
@@ -42,7 +42,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = props => {
           element={'input'}
           type={'checkbox'}
           name={'rememberMe'}
-          component={SuperInput}
+          component={FormsControl}
         />{' '}
         remember me
       </div>

@@ -33,15 +33,13 @@ type CommonPropsType = RouteComponentProps<withRouterParamsType> & ProfileContai
 class ProfileContainer extends React.Component<CommonPropsType> {
 
   componentDidMount() {
-
     let userId = this.props.match.params.userId
-
-    if (!userId) { userId = this.props.authorisedUserId } // сделаем USER по умолчанию, если других нет
-
+    if (!userId) {
+      userId = this.props.authorisedUserId
+      if (!userId) { this.props.history.push('/login') }
+    } // сделаем USER по умолчанию, если других нет
     this.props.getProfile(userId) // THUNK
-
     this.props.getStatus(userId)
-
   }
 
   render() {
