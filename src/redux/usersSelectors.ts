@@ -1,9 +1,18 @@
 import {AppStateType} from "./redux-store";
-import {UserType} from "./usersReducer";
+import {createSelector} from "reselect";
 
-export const getUsers = (state: AppStateType):Array<UserType> => {
-    return state.usersPage.users
-}
+// export const getUsers = (state: AppStateType):Array<UserType> => {
+//     return state.usersPage.users
+// }
+
+// создаем примитивный селектор для зависимости
+const getUsersSelector = (state: AppStateType) => state.usersPage.users
+
+// создаем реселектор с помощью createSelector()
+export const getUsers = createSelector([getUsersSelector], (users)=>{
+    // филтрация ниже не иметт смысла, просто для примера сложных вычислений
+    return users.filter(u => u)
+})
 
 export const getPageSize = (state: AppStateType):number => {
     return state.usersPage.pageSize
