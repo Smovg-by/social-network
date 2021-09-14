@@ -1,0 +1,47 @@
+import { ComponentType } from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import {
+  ActionType,
+  dialogsPageType,
+  SendMessageAC,
+
+} from '../../redux/dialogsReducer'
+import {
+  AppStateType
+} from '../../redux/redux-store'
+import { Dialogs } from './Dialogs'
+
+
+export type MessageType = {
+  message: string
+}
+
+type MapStatePropsType = {
+  dialogsPage: dialogsPageType
+  isAuth: boolean
+}
+
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+  return {
+    dialogsPage: state.dialogsPage,
+    isAuth: state.auth.isAuth
+  }
+}
+
+let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
+  // колл-беки, которые будем отправлять в презентационую компоненту
+  return {
+    SendMessage: (newText: string) => {
+      dispatch(SendMessageAC(newText))
+    }
+  }
+}
+
+// export const DialogsContainer = withAuthRedirect(connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Dialogs))
+
+export default compose<ComponentType>(connect(mapStateToProps, mapDispatchToProps), withAuthRedirect)(Dialogs)
